@@ -1,3 +1,4 @@
+# NOTE: Makefiles need tabs not spaces. Do not convert tabs to spaces.
 CC := g++ # This is the main compiler
 SRCDIR := src
 BUILDDIR := build
