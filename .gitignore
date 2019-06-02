@@ -6,3 +6,4 @@ lib/*
 bin/*
 
 # Add other files/folders to exclude here
+.vscode
