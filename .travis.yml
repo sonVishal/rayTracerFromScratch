@@ -1,5 +1,13 @@
+branches:
+  only:
+  - master
 language: cpp
 dist: bionic
 compiler: gcc
 os: linux
-script: make
+
+jobs:
+  - build:
+      script: make
+  - test:
+      script: echo Test
