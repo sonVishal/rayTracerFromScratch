@@ -11,9 +11,10 @@ private:
     double m_radius{0.0};
     Vector3 m_origin{0.0};
     RGBColor m_diffuseColor{0};
+
 public:
     Sphere();
-    Sphere(const RGBColor& t_color);
+    Sphere(const RGBColor &t_color);
     ~Sphere();
 };
 

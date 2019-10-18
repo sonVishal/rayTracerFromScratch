@@ -3,6 +3,7 @@
 
 #include <array>
 #include <algorithm>
+#include <vector>
 
 class RGBColor
 {
@@ -13,37 +14,43 @@ private:
     // If negative then caps it to 0.
     // If > 255 then caps it to 255.
     static unsigned int GetCappedValue(unsigned int t_value);
+
 public:
     // Constructors
     RGBColor() = default;
 
     RGBColor(unsigned int t_grayValue) : m_color{t_grayValue}
-    { }
+    {
+    }
 
-    RGBColor(unsigned int t_red, unsigned int t_green, unsigned int t_blue) :
-    m_color{{t_red, t_green, t_blue}}
-    { }
+    RGBColor(unsigned int t_red, unsigned int t_green, unsigned int t_blue) : m_color{{t_red, t_green, t_blue}}
+    {
+    }
 
-    RGBColor(const std::array<unsigned int, 3>& t_color) :
-    m_color{t_color}
-    { }
+    RGBColor(const std::array<unsigned int, 3> &t_color) : m_color{t_color}
+    {
+    }
 
     ~RGBColor() = default;
 
     // Getters
-    unsigned int GetRed() const {
+    unsigned int GetRed() const
+    {
         return m_color.at(0);
     }
 
-    unsigned int GetGreen() const {
+    unsigned int GetGreen() const
+    {
         return m_color.at(1);
     }
 
-    unsigned int GetBlue() const {
+    unsigned int GetBlue() const
+    {
         return m_color.at(2);
     }
 
-    const std::array<unsigned int, 3>& GetColor() const {
+    const std::array<unsigned int, 3> &GetColor() const
+    {
         return m_color;
     }
 
@@ -53,29 +60,35 @@ public:
     }
 
     // Setters
-    void SetRed(const unsigned int& t_red) {
+    void SetRed(const unsigned int &t_red)
+    {
         m_color.at(0) = t_red;
     }
 
-    void SetGreen(const unsigned int& t_green) {
+    void SetGreen(const unsigned int &t_green)
+    {
         m_color.at(1) = t_green;
     }
 
-    void SetBlue(const unsigned int& t_blue) {
+    void SetBlue(const unsigned int &t_blue)
+    {
         m_color.at(2) = t_blue;
     }
 
-    void SetColor(const std::array<unsigned int, 3>& t_color) {
+    void SetColor(const std::array<unsigned int, 3> &t_color)
+    {
         std::copy(t_color.begin(), t_color.end(),
-            m_color.begin());
+                  m_color.begin());
     }
 
     // Operators
-    RGBColor& operator+(const RGBColor& t_other);
-    RGBColor& operator-(const RGBColor& t_other);
-    RGBColor& operator*(const RGBColor& t_other);
-    RGBColor& operator*(const unsigned int& t_scalar);
-    RGBColor& operator/(const unsigned int& t_scalar);
+    RGBColor &operator+(const RGBColor &t_other);
+    RGBColor &operator-(const RGBColor &t_other);
+    RGBColor &operator*(const RGBColor &t_other);
+    RGBColor &operator*(const unsigned int &t_scalar);
+    RGBColor &operator/(const unsigned int &t_scalar);
+
 };
 
+using RGBImage = std::vector<RGBColor>;
 #endif //_RGBCOLOR_H_

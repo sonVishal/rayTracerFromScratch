@@ -50,6 +50,14 @@ void Vector3::operator-=(const Vector3 &t_other)
     m_coords[2] -= t_other[2];
 }
 
+Vector3 Vector3::operator-() const
+{
+    return Vector3(
+        -m_coords[0],
+        -m_coords[1],
+        -m_coords[2]);
+}
+
 // Scale
 Vector3 Vector3::operator*(double t_scaleFactor) const
 {

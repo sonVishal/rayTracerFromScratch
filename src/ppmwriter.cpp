@@ -5,10 +5,11 @@
 
 const std::string PPMWriter::m_fileType = "P3\n";
 
-PPMWriter::PPMWriter(const char* t_fileName) : m_fileName(t_fileName)
-{}
+PPMWriter::PPMWriter(const char *t_fileName) : m_fileName(t_fileName)
+{
+}
 
-void PPMWriter::SetFileName(const char* t_fileName)
+void PPMWriter::SetFileName(const char *t_fileName)
 {
     m_fileName.clear();
     m_fileName.assign(t_fileName);
@@ -20,19 +21,17 @@ void PPMWriter::SetImageSize(unsigned int t_rows, unsigned int t_columns)
     m_numColumns = t_columns;
 }
 
-void PPMWriter::SetImage(const PPMWriter::RGBVector& t_image)
+void PPMWriter::SetImage(const RGBImage &t_image)
 {
     m_pixelMatrix = t_image;
 }
 
-void PPMWriter::WritePixel(std::ofstream& t_fileStream, const RGBColor& t_pixelValue)
- {
-    t_fileStream << t_pixelValue.GetRed() << ' ' <<\
-        t_pixelValue.GetGreen() << ' ' <<\
-        t_pixelValue.GetBlue();
+void PPMWriter::WritePixel(std::ofstream &t_fileStream, const RGBColor &t_pixelValue)
+{
+    t_fileStream << t_pixelValue.GetRed() << ' ' << t_pixelValue.GetGreen() << ' ' << t_pixelValue.GetBlue();
 }
 
-void PPMWriter::SetFileComment(const char* t_fileComment)
+void PPMWriter::SetFileComment(const char *t_fileComment)
 {
     this->m_fileComment.clear();
     this->m_fileComment.assign(t_fileComment);

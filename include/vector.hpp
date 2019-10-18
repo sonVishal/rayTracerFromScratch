@@ -22,6 +22,7 @@ public:
     // Operators
     Vector3 operator+(const Vector3 &t_other) const;
     Vector3 operator-(const Vector3 &t_other) const;
+    Vector3 operator-() const;
     void operator+=(const Vector3 &t_other);
     void operator-=(const Vector3 &t_other);
     // Scale

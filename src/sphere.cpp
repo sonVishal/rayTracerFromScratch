@@ -8,6 +8,6 @@ Sphere::~Sphere()
 {
 }
 
-Sphere::Sphere(const RGBColor& t_color) : m_diffuseColor{t_color}
+Sphere::Sphere(const RGBColor &t_color) : m_diffuseColor{t_color}
 {
 }
