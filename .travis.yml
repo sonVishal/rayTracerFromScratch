@@ -6,7 +6,7 @@ dist: bionic
 compiler: gcc
 os: linux
 
-jobs:
+stages:
   - build:
       script: make
   - test:
