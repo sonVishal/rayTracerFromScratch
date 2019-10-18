@@ -5,6 +5,9 @@
 
 const std::string PPMWriter::m_fileType = "P3\n";
 
+PPMWriter::PPMWriter(const char* t_fileName) : m_fileName(t_fileName)
+{}
+
 void PPMWriter::SetFileName(const char* t_fileName)
 {
     m_fileName.clear();

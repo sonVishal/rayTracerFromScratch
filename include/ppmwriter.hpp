@@ -13,6 +13,7 @@ class PPMWriter
 public:
     using RGBVector = std::vector<RGBColor>;
     PPMWriter() = default;
+    PPMWriter(const char* t_fileName);
     ~PPMWriter() = default;
     void WriteImage();
     void SetFileComment(const char* t_fileComment);
