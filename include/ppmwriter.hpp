@@ -17,12 +17,12 @@ public:
     void WriteImage();
     void SetFileComment(const char* t_fileComment);
     void SetFileName(const char* t_fileName);
-    void SetImageSize(int t_rows, int t_columns);
+    void SetImageSize(unsigned int t_rows, unsigned int t_columns);
     void SetImage(const RGBVector& t_image);
 
 private:
-    int m_numRows{1};
-    int m_numColumns{1};
+    unsigned int m_numRows{1};
+    unsigned int m_numColumns{1};
     RGBVector m_pixelMatrix;
     static const std::string m_fileType;
     std::string m_fileComment{"# This file has been written by PPMWriter v0.0.1\n"};

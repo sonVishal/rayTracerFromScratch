@@ -11,7 +11,7 @@ void PPMWriter::SetFileName(const char* t_fileName)
     m_fileName.assign(t_fileName);
 }
 
-void PPMWriter::SetImageSize(int t_rows, int t_columns)
+void PPMWriter::SetImageSize(unsigned int t_rows, unsigned int t_columns)
 {
     m_numRows = t_rows;
     m_numColumns = t_columns;
@@ -53,9 +53,9 @@ void PPMWriter::WriteImage()
 
     auto currentPixel = this->m_pixelMatrix.begin();
     auto pixelEnd = this->m_pixelMatrix.end();
-    for (int i = 0; (i < this->m_numRows) && (currentPixel != pixelEnd); i++)
+    for (unsigned int i = 0; (i < this->m_numRows) && (currentPixel != pixelEnd); i++)
     {
-        for (int j = 0; j < (this->m_numColumns) && (currentPixel != pixelEnd); j++)
+        for (unsigned int j = 0; j < (this->m_numColumns) && (currentPixel != pixelEnd); j++)
         {
             PPMWriter::WritePixel(imageFile, *currentPixel);
             // After each pixel put two spaces for readability
