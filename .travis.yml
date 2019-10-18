@@ -5,9 +5,4 @@ language: cpp
 dist: bionic
 compiler: gcc
 os: linux
-
-stages:
-  - build:
-      script: make
-  - test:
-      script: echo Test
+script: make
