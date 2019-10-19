@@ -7,7 +7,7 @@ class Object
 private:
     Vector3 m_origin{0.0};
 
-public:
+protected:
     Object();
     Object(const Vector3 &t_origin);
     ~Object();
