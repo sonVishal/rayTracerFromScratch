@@ -17,8 +17,14 @@ protected:
 class ObjectFactory
 {
 private:
+    enum class ObjectType{
+        Unknown,
+        PointLight,
+        Sphere
+    };
 public:
     ObjectFactory();
+    Object* CreateObject(const ObjectType& t_object);
     ~ObjectFactory();
 };
 
