@@ -2,7 +2,7 @@
 #ifndef _SPHERE_HPP_
 #define _SPHERE_HPP_
 
-#include "vector.hpp"
+#include "vector3.hpp"
 #include "rgbcolor.hpp"
 #include "object.hpp"
 

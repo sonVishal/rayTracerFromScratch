@@ -1,6 +1,7 @@
 #ifndef _OBJECT_HPP_
 #define _OBJECT_HPP_
-#include "vector.hpp"
+#include "vector3.hpp"
+#include <vector>
 
 class Object
 {
@@ -12,5 +13,15 @@ protected:
     Object(const Vector3 &t_origin);
     ~Object();
 };
+
+class ObjectFactory
+{
+private:
+public:
+    ObjectFactory();
+    ~ObjectFactory();
+};
+
+using ObjectPtrVector = std::vector<Object*>;
 
 #endif //_OBJECT_HPP_

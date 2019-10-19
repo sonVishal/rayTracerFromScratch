@@ -1,5 +1,5 @@
-#ifndef _VECTOR_HPP_
-#define _VECTOR_HPP_
+#ifndef _VECTOR3_HPP_
+#define _VECTOR3_HPP_
 
 #include <array>
 #include <initializer_list>
@@ -53,4 +53,4 @@ public:
     ~Vector3();
 };
 
-#endif
+#endif // _VECTOR3_HPP_

@@ -1,6 +1,6 @@
 #ifndef _CAMERA_HPP_
 #define _CAMERA_HPP_
-#include "vector.hpp"
+#include "vector3.hpp"
 #include <array>
 
 class Camera
