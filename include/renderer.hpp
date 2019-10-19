@@ -8,14 +8,13 @@ class Renderer
 {
 private:
     Scene m_sceneToRender;
-    Camera m_camera;
     RGBImage m_renderedScene;
 
 public:
     Renderer();
     ~Renderer();
-    void SetScene();
-    void SetCamera();
+    void SetScene(const Scene &t_scene);
+    const RGBImage& GetRenderedImage() const;
     void Render();
 };
 

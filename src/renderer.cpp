@@ -8,14 +8,16 @@ Renderer::~Renderer()
 {
 }
 
-void Renderer::SetScene()
+void Renderer::SetScene(const Scene& t_scene)
 {
-}
-
-void Renderer::SetCamera()
-{
+    m_sceneToRender = t_scene;
 }
 
 void Renderer::Render()
 {
+}
+
+const RGBImage& Renderer::GetRenderedImage() const
+{
+    return m_renderedScene;
 }

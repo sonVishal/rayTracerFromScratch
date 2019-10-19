@@ -1,6 +1,5 @@
 #ifndef _VECTOR3_HPP_
 #define _VECTOR3_HPP_
-
 #include <array>
 #include <initializer_list>
 
@@ -15,9 +14,9 @@ public:
     Vector3(double t_initVal);
     Vector3(double t_x, double t_y, double t_z);
 
-    // Copy and Assignment
+    // TODO: Copy and Assignment
 
-    // Move and Assignment
+    // TODO: Move and Assignment
 
     // Operators
     Vector3 operator+(const Vector3 &t_other) const;

@@ -21,6 +21,11 @@ public:
     void SetFocalLength(unsigned int t_focalLength);
     void SetResolution(unsigned int t_xPixels, unsigned int t_yPixels);
 
+    const Vector3 GetOrigin() const;
+    const Vector3 GetUpDirection() const;
+    const Vector3 GetLeftDirection() const;
+    const Vector3 GetViewDirection() const;
+
     ~Camera();
 };
 
