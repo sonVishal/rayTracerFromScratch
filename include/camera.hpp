@@ -13,7 +13,7 @@ private:
     std::array<unsigned int, 2> m_resolution{10}; // 0 - rows, 1 - columns
     unsigned int m_focalLength{50};               // defines at what distance is the view plane from position
 public:
-    Camera();
+    Camera() = default;
     Camera(const Vector3 &t_origin,
            const Vector3 &t_upDir,
            const Vector3 &t_viewDir);
@@ -26,7 +26,7 @@ public:
     const Vector3 GetLeftDirection() const;
     const Vector3 GetViewDirection() const;
 
-    ~Camera();
+    ~Camera() = default;
 };
 
 #endif //_CAMERA_HPP_

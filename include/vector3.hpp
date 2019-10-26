@@ -10,38 +10,42 @@ private:
 
 public:
     // Constructors
-    Vector3();
+    Vector3() = default;
     Vector3(double t_initVal);
     Vector3(double t_x, double t_y, double t_z);
 
-    // TODO: Copy and Assignment
-
-    // TODO: Move and Assignment
-
     // Operators
+    // Binary
     Vector3 operator+(const Vector3 &t_other) const;
     Vector3 operator-(const Vector3 &t_other) const;
+    // Unary
+    Vector3 operator+() const;
     Vector3 operator-() const;
-    void operator+=(const Vector3 &t_other);
-    void operator-=(const Vector3 &t_other);
-    // Scale
+    // Scalar operators
     Vector3 operator*(double t_scaleFactor) const;
     Vector3 operator/(double t_scaleFactor) const;
-    void operator*=(double t_scaleFactor);
-    void operator/=(double t_scaleFactor);
     // Dot product
     double operator%(const Vector3 &t_other) const;
     // Cross product
     Vector3 operator*(const Vector3 &t_other) const;
+    // Assignment
+    Vector3 &operator+=(const Vector3 &t_other);
+    Vector3 &operator-=(const Vector3 &t_other);
+    Vector3 &operator*=(double t_scaleFactor);
+    Vector3 &operator/=(double t_scaleFactor);
+    // Access
+    const double &operator[](unsigned int t_idx) const;
+    double &operator[](unsigned int t_idx);
+    // Equality
+    bool operator==(const Vector3 &t_other) const;
+    bool operator!=(const Vector3 &t_other) const;
 
     // Other operators
     void Normalize();
 
     // Getters
     double &GetCoordAt(unsigned int t_idx);
-    double &operator[](unsigned int t_idx);
     const double &GetCoordAt(unsigned int t_idx) const;
-    const double &operator[](unsigned int t_idx) const;
     double GetMagnitude() const;
     Vector3 GetNormalized() const;
 
@@ -49,7 +53,7 @@ public:
     void SetCoordAt(unsigned int t_idx, double t_value);
     void SetCoords(double t_x, double t_y, double t_z);
 
-    ~Vector3();
+    ~Vector3() = default;
 };
 
 #endif // _VECTOR3_HPP_

@@ -1,9 +1,5 @@
 #include "camera.hpp"
 
-Camera::Camera()
-{
-}
-
 Camera::Camera(const Vector3 &t_origin, const Vector3 &t_upDirection,
                const Vector3 &t_viewDirection)
     : m_origin{t_origin},
@@ -22,8 +18,4 @@ void Camera::SetResolution(unsigned int t_xPixels, unsigned int t_yPixels)
 {
     m_resolution[0] = t_xPixels;
     m_resolution[1] = t_yPixels;
-}
-
-Camera::~Camera()
-{
 }
