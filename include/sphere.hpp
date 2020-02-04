@@ -16,6 +16,9 @@ public:
     Sphere(const RGBColor &t_color);
     Sphere(const Vector3 &t_origin, double t_radius);
     void SetColor(const RGBColor &t_color);
+    int GetIntersectionWithRay(const Vector3 &ray,
+                               const Vector3 &rayOrigin,
+                               std::array<Vector3, 2> &intersectionPoints) const;
     ~Sphere();
 };
 

@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <ios>
 #include <cmath>
+#include <limits>
 
 QuadraticEq::QuadraticEq(/* args */)
 {
@@ -63,6 +64,11 @@ int QuadraticEq::CalculateRoots()
             std::swap(m_roots.at(0), m_roots.at(1));
         }
         numRoots = 2;
+    }
+    else // negative determinant
+    {
+        numRoots = 0;
+        m_roots.at(0) = m_roots.at(1) = std::numeric_limits<double>::quiet_NaN();
     }
     return numRoots;
 }

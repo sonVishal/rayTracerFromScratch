@@ -8,7 +8,7 @@ TARGET := $(BINDIR)/traceIt
 SRCEXT := cpp
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
-CFLAGS := -g -Wall
+CFLAGS := -g -O0 -Wall
 LIB := #in case of third party libs
 INC := -I include
 

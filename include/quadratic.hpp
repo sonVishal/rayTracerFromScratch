@@ -1,3 +1,5 @@
+#ifndef _QUADRATIC_HXX_
+#define _QUADRATIC_HXX_
 #include <array>
 #include <memory>
 #include <cmath>
@@ -22,3 +24,5 @@ public:
     void PrintEquation() const;
     ~QuadraticEq();
 };
+
+#endif

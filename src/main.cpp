@@ -25,13 +25,20 @@ int main(int argc, char const *argv[])
     testRenderer.SetScene(testScene);
     // Step 5: Setup the camera
     Vector3 cameraUp, cameraOrigin, cameraView;
+    cameraUp.SetCoordAt(2, 1.0);
+    cameraView = testSphere.GetOrigin() - cameraOrigin;
     Camera testCamera(cameraOrigin, cameraUp, cameraView);
+    testCamera.SetResolution(100, 100);
     testRenderer.SetCamera(testCamera);
     // Step 6: Render!
     testRenderer.Render();
     // Step 7: Write the output to a file
     PPMWriter outputImage;
     outputImage.SetImage(testRenderer.GetRenderedImage());
-
+    unsigned int res[2];
+    testCamera.GetResolution(res[0], res[1]);
+    outputImage.SetImageSize(res[0], res[1]);
+    outputImage.SetFileName("testImage.ppm");
+    outputImage.WriteImage();
     return 0;
 }

@@ -1,4 +1,6 @@
 #include "sphere.hpp"
+#include "quadratic.hpp"
+#include "object.hpp"
 
 Sphere::Sphere()
 {
@@ -20,4 +22,44 @@ Sphere::Sphere(const Vector3 &t_origin, double t_radius)
 void Sphere::SetColor(const RGBColor &t_color)
 {
     m_diffuseColor = t_color;
+}
+
+int Sphere::GetIntersectionWithRay(const Vector3 &rayDirection,
+                                   const Vector3 &rayOrigin,
+                                   std::array<Vector3, 2> &intersectionPoints) const
+{
+    int nIntersectionPts = 0;
+
+    double a = 0.0, b = 0.0, c = 0.0;
+    QuadraticEq intersectionEq;
+    intersectionEq.SetEquation(a, b, c);
+
+    for (size_t i = 0; i < 3; i++)
+    {
+        a += rayDirection[i] * rayDirection[i];
+        b += 2.0 * rayOrigin[i] * (rayDirection[i] - m_origin[i] - rayDirection[i] * m_origin[i]);
+        c += rayOrigin[i] * rayOrigin[i] + m_origin[i] * m_origin[i];
+    }
+    c += m_radius * m_radius;
+
+    nIntersectionPts = intersectionEq.CalculateRoots();
+    auto roots = intersectionEq.GetRoots();
+    switch (nIntersectionPts)
+    {
+    case 0:
+        intersectionPoints.at(0) = intersectionPoints.at(1) = Vector3(0.0);
+        break;
+    case 1:
+        intersectionPoints.at(0) = rayOrigin + rayDirection * roots.at(0);
+        intersectionPoints.at(1) = Vector3(0.0);
+        break;
+    case 2:
+        intersectionPoints.at(0) = rayOrigin + rayDirection * roots.at(0);
+        intersectionPoints.at(1) = rayOrigin + rayDirection * roots.at(1);
+        break;
+    default:
+        break;
+    }
+
+    return nIntersectionPts;
 }

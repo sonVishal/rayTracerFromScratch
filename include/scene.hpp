@@ -20,7 +20,9 @@ public:
     void AddObject(const Object &t_object);
     void SetAmbientColor(const RGBColor &t_color);
     void SetCamera(const Camera &t_camera);
-
+    unsigned int GetNumberOfObjects() const;
+    const Object& GetObjectAt(unsigned int) const;
+    const std::vector<Object>& GetObjectList() const;
     ~Scene();
 };
 

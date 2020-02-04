@@ -27,3 +27,18 @@ void Scene::SetCamera(const Camera& t_camera)
 {
     m_camera = t_camera;
 }
+
+unsigned int Scene::GetNumberOfObjects() const
+{
+    return m_objects.size();
+}
+
+const Object& Scene::GetObjectAt(unsigned int t_idx) const
+{
+    return m_objects.at(t_idx);
+}
+
+const std::vector<Object>& Scene::GetObjectList() const
+{
+    return m_objects;
+}
