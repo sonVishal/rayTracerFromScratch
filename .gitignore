@@ -7,3 +7,6 @@ bin/*
 
 # Add other files/folders to exclude here
 .vscode
+
+# Ignore image files
+*.ppm
