@@ -2,6 +2,7 @@
 #define _VECTOR3_HPP_
 #include <array>
 #include <initializer_list>
+#include <iostream>
 
 class Vector3
 {
@@ -47,11 +48,15 @@ public:
     double &GetCoordAt(unsigned int t_idx);
     const double &GetCoordAt(unsigned int t_idx) const;
     double GetMagnitude() const;
+    double GetMagnitudeSq() const;
     Vector3 GetNormalized() const;
 
     // Setters
     void SetCoordAt(unsigned int t_idx, double t_value);
     void SetCoords(double t_x, double t_y, double t_z);
+
+    // Printers
+    friend std::ostream &operator<<(std::ostream &t_output, const Vector3 &t_vec);
 
     ~Vector3() = default;
 };

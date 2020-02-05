@@ -10,6 +10,9 @@ private:
     Scene m_sceneToRender;
     RGBImage m_renderedScene;
     Camera m_camera;
+    double m_imagePlaneDistance{1.0};
+    double m_imagePlaneWidth{1.0};
+    std::vector<double> m_distanceBuffer;
 
 public:
     Renderer() = default;

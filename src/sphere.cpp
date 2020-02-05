@@ -10,18 +10,13 @@ Sphere::~Sphere()
 {
 }
 
-Sphere::Sphere(const RGBColor &t_color) : m_diffuseColor{t_color}
+Sphere::Sphere(const RGBColor &t_color) : Object{t_color}
 {
 }
 
 Sphere::Sphere(const Vector3 &t_origin, double t_radius)
     : Object(t_origin), m_radius(t_radius)
 {
-}
-
-void Sphere::SetColor(const RGBColor &t_color)
-{
-    m_diffuseColor = t_color;
 }
 
 int Sphere::GetIntersectionWithRay(const Vector3 &rayDirection,
@@ -32,16 +27,12 @@ int Sphere::GetIntersectionWithRay(const Vector3 &rayDirection,
 
     double a = 0.0, b = 0.0, c = 0.0;
     QuadraticEq intersectionEq;
+
+    a = rayDirection.GetMagnitudeSq();
+    b = (rayDirection * 2.0) % (rayOrigin - m_origin);
+    c = m_origin.GetMagnitudeSq() - m_radius * m_radius;
+
     intersectionEq.SetEquation(a, b, c);
-
-    for (size_t i = 0; i < 3; i++)
-    {
-        a += rayDirection[i] * rayDirection[i];
-        b += 2.0 * rayOrigin[i] * (rayDirection[i] - m_origin[i] - rayDirection[i] * m_origin[i]);
-        c += rayOrigin[i] * rayOrigin[i] + m_origin[i] * m_origin[i];
-    }
-    c += m_radius * m_radius;
-
     nIntersectionPts = intersectionEq.CalculateRoots();
     auto roots = intersectionEq.GetRoots();
     switch (nIntersectionPts)

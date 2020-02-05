@@ -13,40 +13,51 @@ void Renderer::SetCamera(const Camera &t_camera)
 
 void Renderer::Render()
 {
-    unsigned int xRes = 0, yRes = 0;
-    m_camera.GetResolution(xRes, yRes);
+    double xRes = 0, yRes = 0;
+    this->m_camera.GetResolution(xRes, yRes);
     m_renderedScene.reserve(xRes * yRes);
 
-    double maxRes = static_cast<double>(std::max(xRes, yRes));
-    double xLen = xRes / maxRes, xLenBy2 = xLen / 2.0;
-    double yLen = yRes / maxRes, yLenBy2 = yLen / 2.0;
-    auto imagePlaneTopLeft = m_camera.GetOrigin() +
-                             m_camera.GetViewDirection() +
-                             (m_camera.GetLeftDirection() * xLenBy2) +
-                             (m_camera.GetUpDirection() * yLenBy2);
+    double imagePlaneHeight = m_imagePlaneWidth * yRes / xRes;
 
-    for (unsigned int i = 0; i < xRes; i++)
+    Vector3 imagePlaneCenter = m_camera.GetOrigin() +
+                               m_camera.GetViewDirection() * m_imagePlaneDistance;
+
+    Vector3 imagePlaneTopLeft = imagePlaneCenter +
+                                m_camera.GetLeftDirection() * m_imagePlaneWidth * 0.5 +
+                                m_camera.GetUpDirection() * imagePlaneHeight * 0.5;
+
+    Vector3 imagePlaneRightDir = m_camera.GetLeftDirection() * -1.0;
+    Vector3 imagePlaneDownDir = m_camera.GetUpDirection() * -1.0;
+
+    for (auto obj : m_sceneToRender.GetObjectList())
     {
-        for (unsigned int j = 0; j < yRes; j++)
+        for (unsigned int i = 0; i < xRes; i++)
         {
-            auto rayOrigin = imagePlaneTopLeft +
-                                m_camera.GetLeftDirection() * (-0.5 * (i + 1)) +
-                                m_camera.GetUpDirection() * (-0.5 * (j + 1));
-            auto rayDirection = rayOrigin -
-                                m_camera.GetOrigin();
-            rayDirection.Normalize();
-            auto objectList = m_sceneToRender.GetObjectList();
-            RGBColor thisRayColor(0, 0, 0);
-            for (auto obj : objectList)
+            for (unsigned int j = 0; j < yRes; j++)
             {
-                std::array<Vector3, 2> intsctPts;
-                if (obj.GetIntersectionWithRay(rayDirection, rayOrigin, intsctPts))
+                Vector3 rayOrigin, rayDirection;
+                Vector3 pixelTopLeft = imagePlaneTopLeft + imagePlaneRightDir * i + imagePlaneDownDir * j;
+                rayOrigin = pixelTopLeft + imagePlaneRightDir * 0.5 * m_imagePlaneDistance +
+                            imagePlaneDownDir * 0.5 * m_imagePlaneDistance;
+                rayDirection = rayOrigin - m_camera.GetOrigin();
+                rayDirection.Normalize();
+
+                std::array<Vector3, 2> intersectionPts;
+                int nIntPts = obj->GetIntersectionWithRay(rayDirection, rayOrigin, intersectionPts);
+                switch (nIntPts)
                 {
-                    m_renderedScene.emplace_back(RGBColor(0,0,0));
-                }
-                else
-                {
-                    m_renderedScene.emplace_back(RGBColor(255,255,255));
+                case 0:
+                    m_renderedScene.emplace_back(RGBColor(0, 0, 0));
+                    break;
+                case 1:
+                    m_renderedScene.emplace_back(RGBColor(255, 0, 0));
+                    break;
+                case 2:
+                    m_renderedScene.emplace_back(RGBColor(0, 255, 0));
+                    break;
+                default:
+                    m_renderedScene.emplace_back(RGBColor(0, 0, 255));
+                    break;
                 }
             }
         }

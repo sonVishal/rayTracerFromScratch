@@ -22,6 +22,7 @@ public:
     void SetResolution(unsigned int t_xPixels, unsigned int t_yPixels);
 
     void GetResolution(unsigned int& t_xPixels, unsigned int& t_yPixels) const;
+    void GetResolution(double& t_xPixels, double& t_yPixels) const;
     const Vector3 GetOrigin() const;
     const Vector3 GetUpDirection() const;
     const Vector3 GetLeftDirection() const;

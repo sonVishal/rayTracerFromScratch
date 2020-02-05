@@ -164,6 +164,13 @@ double Vector3::GetMagnitude() const
                 (m_coords[2] * m_coords[2]));
 }
 
+double Vector3::GetMagnitudeSq() const
+{
+    return (m_coords[0] * m_coords[0]) +
+           (m_coords[1] * m_coords[1]) +
+           (m_coords[2] * m_coords[2]);
+}
+
 Vector3 Vector3::GetNormalized() const
 {
     double mag = this->GetMagnitude();
@@ -184,4 +191,11 @@ void Vector3::SetCoords(double t_x, double t_y, double t_z)
     m_coords[0] = t_x;
     m_coords[1] = t_y;
     m_coords[2] = t_z;
+}
+
+// Printers
+std::ostream &operator<<(std::ostream &t_output, const Vector3 &t_vec)
+{
+    t_output << '[' << t_vec[0] << '\t' << t_vec[1] << '\t' << t_vec[2] << ']' << std::endl;
+    return t_output;
 }
