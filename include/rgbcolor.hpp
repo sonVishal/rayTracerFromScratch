@@ -88,6 +88,9 @@ public:
     RGBColor &operator*(const unsigned int &t_scalar);
     RGBColor &operator/(const unsigned int &t_scalar);
 
+    // Printers
+    friend std::ostream &operator<<(std::ostream &t_output, const RGBColor &t_color);
+
 };
 
 using RGBImage = std::vector<RGBColor>;

@@ -51,3 +51,9 @@ RGBColor &RGBColor::operator/(const unsigned int &t_scalar)
     m_color.at(2) = RGBColor::GetCappedValue(m_color.at(2) / t_scalar);
     return *this;
 }
+
+std::ostream &operator<<(std::ostream &t_output, const RGBColor &t_color)
+{
+    t_output << '(' << t_color.GetRed() << '\t' << t_color.GetGreen() << '\t' << t_color.GetBlue() << ')';
+    return t_output;
+}

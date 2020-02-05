@@ -31,10 +31,12 @@ void Renderer::Render()
 
     for (auto obj : m_sceneToRender.GetObjectList())
     {
+        std::cout << "===================================================================================\n";
         for (unsigned int i = 0; i < xRes; i++)
         {
             for (unsigned int j = 0; j < yRes; j++)
             {
+                std::cout << "----------------------------------------\n";
                 Vector3 rayOrigin, rayDirection;
                 Vector3 pixelTopLeft = imagePlaneTopLeft + imagePlaneRightDir * i + imagePlaneDownDir * j;
                 rayOrigin = pixelTopLeft + imagePlaneRightDir * 0.5 * m_imagePlaneDistance +
@@ -44,23 +46,33 @@ void Renderer::Render()
 
                 std::array<Vector3, 2> intersectionPts;
                 int nIntPts = obj->GetIntersectionWithRay(rayDirection, rayOrigin, intersectionPts);
+
+                RGBColor pixelColor(0, 0, 0);
                 switch (nIntPts)
                 {
                 case 0:
-                    m_renderedScene.emplace_back(RGBColor(0, 0, 0));
+                    pixelColor = RGBColor(255, 0, 0);
                     break;
                 case 1:
-                    m_renderedScene.emplace_back(RGBColor(255, 0, 0));
+                    pixelColor = RGBColor(0, 255, 0);
                     break;
                 case 2:
-                    m_renderedScene.emplace_back(RGBColor(0, 255, 0));
+                    pixelColor = RGBColor(0, 0, 255);
                     break;
                 default:
-                    m_renderedScene.emplace_back(RGBColor(0, 0, 255));
                     break;
+                }
+                m_renderedScene.emplace_back(pixelColor);
+                {
+                    std::cout << "Ray Origin: " << rayOrigin << '\n';
+                    std::cout << "Ray Direction: " << rayDirection << '\n';
+                    std::cout << "Intersection Point 1: " << intersectionPts.at(0) << '\n';
+                    std::cout << "Intersection Point 2: " << intersectionPts.at(1) << '\n';
+                    std::cout << "Pixel Color: " << pixelColor;
                 }
             }
         }
+        std::cout << "===================================================================================\n";
     }
 }
 

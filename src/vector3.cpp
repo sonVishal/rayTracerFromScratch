@@ -196,6 +196,6 @@ void Vector3::SetCoords(double t_x, double t_y, double t_z)
 // Printers
 std::ostream &operator<<(std::ostream &t_output, const Vector3 &t_vec)
 {
-    t_output << '[' << t_vec[0] << '\t' << t_vec[1] << '\t' << t_vec[2] << ']' << std::endl;
+    t_output << '[' << t_vec[0] << '\t' << t_vec[1] << '\t' << t_vec[2] << ']';
     return t_output;
 }
