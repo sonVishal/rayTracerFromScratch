@@ -16,6 +16,7 @@ public:
     Object(const Vector3 &t_origin,
            const RGBColor &t_color);
     Vector3 GetOrigin() const;
+    void SetOrigin(const Vector3& t_origin);
     void SetColor(const RGBColor &t_color);
     const RGBColor GetColor() const;
     virtual int GetIntersectionWithRay(const Vector3 &ray,

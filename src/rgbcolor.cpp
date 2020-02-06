@@ -54,6 +54,8 @@ RGBColor &RGBColor::operator/(const unsigned int &t_scalar)
 
 std::ostream &operator<<(std::ostream &t_output, const RGBColor &t_color)
 {
-    t_output << '(' << t_color.GetRed() << '\t' << t_color.GetGreen() << '\t' << t_color.GetBlue() << ')';
+    t_output << '(' << t_color.GetRed();
+    t_output << '\t' << t_color.GetGreen();
+    t_output << '\t' << t_color.GetBlue() << ')';
     return t_output;
 }

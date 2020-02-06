@@ -17,6 +17,7 @@ public:
     int GetIntersectionWithRay(const Vector3 &ray,
                                const Vector3 &rayOrigin,
                                std::array<Vector3, 2> &intersectionPoints) const;
+    void SetRadius(double t_radius);
     ~Sphere();
 };
 

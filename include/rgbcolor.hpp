@@ -4,6 +4,7 @@
 #include <array>
 #include <algorithm>
 #include <vector>
+#include <iostream>
 
 class RGBColor
 {
@@ -29,6 +30,13 @@ public:
 
     RGBColor(const std::array<unsigned int, 3> &t_color) : m_color{t_color}
     {
+    }
+
+    RGBColor(const RGBColor& t_other)
+    {
+        this->SetRed(t_other.GetRed());
+        this->SetGreen(t_other.GetGreen());
+        this->SetBlue(t_other.GetBlue());
     }
 
     ~RGBColor() = default;

@@ -8,7 +8,7 @@ Camera::Camera(const Vector3 &t_origin, const Vector3 &t_upDirection,
 {
     m_up.Normalize();
     m_view.Normalize();
-    m_left = m_up * (-m_view);
+    m_left = (-m_view) * m_up;
     m_left.Normalize();
 }
 

@@ -27,6 +27,11 @@ Vector3 Object::GetOrigin() const
     return m_origin;
 }
 
+void Object::SetOrigin(const Vector3& t_origin)
+{
+    m_origin = t_origin;
+}
+
 int Object::GetIntersectionWithRay(const Vector3 &ray,
                                    const Vector3 &rayOrigin,
                                    std::array<Vector3, 2> &intersectionPoints) const

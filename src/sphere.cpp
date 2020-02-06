@@ -19,6 +19,11 @@ Sphere::Sphere(const Vector3 &t_origin, double t_radius)
 {
 }
 
+void Sphere::SetRadius(double t_radius)
+{
+    m_radius = t_radius;
+}
+
 int Sphere::GetIntersectionWithRay(const Vector3 &rayDirection,
                                    const Vector3 &rayOrigin,
                                    std::array<Vector3, 2> &intersectionPoints) const

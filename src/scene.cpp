@@ -15,7 +15,15 @@ void Scene::AddLight(Light *t_light)
 
 void Scene::AddObject(Object *t_object)
 {
-    m_objects.emplace_back(t_object);
+    m_objects.push_back(t_object);
+}
+
+void Scene::AddObjects(int t_nObjects, Object* t_objects)
+{
+    for (int i = 0; i < t_nObjects; i++)
+    {
+        m_objects.push_back(t_objects + i);
+    }
 }
 
 void Scene::SetAmbientColor(const RGBColor &t_color)

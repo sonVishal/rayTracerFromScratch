@@ -18,6 +18,7 @@ public:
     Scene();
     void AddLight(Light *t_light);
     void AddObject(Object *t_object);
+    void AddObjects(int t_nObjects, Object *t_objects);
     void SetAmbientColor(const RGBColor &t_color);
     void SetCamera(const Camera &t_camera);
     unsigned int GetNumberOfObjects() const;

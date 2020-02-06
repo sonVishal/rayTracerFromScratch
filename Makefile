@@ -8,7 +8,8 @@ TARGET := $(BINDIR)/traceIt
 SRCEXT := cpp
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
-CFLAGS := -g -O0 -Wall
+DEBUG_FLAGS := -DDEBUG_RAY -DDEBUG_INTERSECTION
+CFLAGS := -g -O0 -Wall $(DEBUG_FLAGS)
 LIB := #in case of third party libs
 INC := -I include
 
