@@ -64,13 +64,11 @@ void Renderer::Render()
                 }
                 m_renderedScene[i * xRes + j] = m_renderedScene[i * xRes + j] + pixelColor;
 #ifdef DEBUG_RENDER
-                {
-                    std::cout << "===================================================================================\n";
-                    std::cout << "Intersection Point 1: " << intersectionPts.at(0) << std::endl;
-                    std::cout << "Intersection Point 2: " << intersectionPts.at(1) << std::endl;
-                    std::cout << "Pixel Color: " << m_renderedScene[i * xRes + j] << std::endl;
-                    std::cout << "===================================================================================\n";
-                }
+                std::cout << "===================================================================================\n";
+                std::cout << "Intersection Point 1: " << intersectionPts.at(0) << std::endl;
+                std::cout << "Intersection Point 2: " << intersectionPts.at(1) << std::endl;
+                std::cout << "Pixel Color: " << m_renderedScene[i * xRes + j] << std::endl;
+                std::cout << "===================================================================================\n";
 #endif
             }
         }
