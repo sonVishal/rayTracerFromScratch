@@ -1,10 +1,12 @@
 #include "rgbcolor.hpp"
 
-const unsigned int RGBColor::m_maxValue = 255;
+const unsigned int RGBColor::m_maxValue = 255U;
+const unsigned int RGBColor::m_minValue = 0U;
 
 unsigned int RGBColor::GetCappedValue(unsigned int t_value)
 {
-    return std::min(std::max(t_value, 0U), RGBColor::m_maxValue);
+    return std::min(std::max(t_value, RGBColor::m_minValue),
+                    RGBColor::m_maxValue);
 }
 
 // Operators

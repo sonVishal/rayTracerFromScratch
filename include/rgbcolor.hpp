@@ -11,6 +11,7 @@ class RGBColor
 private:
     std::array<unsigned int, 3> m_color{0, 0, 0};
     static const unsigned int m_maxValue;
+    static const unsigned int m_minValue;
     // Caps the input value to 0-255.
     // If negative then caps it to 0.
     // If > 255 then caps it to 255.
@@ -98,7 +99,6 @@ public:
 
     // Printers
     friend std::ostream &operator<<(std::ostream &t_output, const RGBColor &t_color);
-
 };
 
 using RGBImage = std::vector<RGBColor>;
