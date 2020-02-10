@@ -77,8 +77,15 @@ void Renderer::Render()
             for (auto obj : m_sceneToRender.GetObjectList())
             {
                 nIntPts = obj->GetIntersectionWithRay(rayDirection, rayOrigin, intersectionPts);
-                std::cout << nIntPts << std::endl;
+
+                RGBColor pixelColor(0, 0, 0);
+                if (nIntPts > 0)
+                {
+                    pixelColor = obj->GetColor();
+                }
+                m_renderedScene.emplace_back(pixelColor);
             }
+            std::cout << rayOrigin << std::endl;
         }
     }
 }

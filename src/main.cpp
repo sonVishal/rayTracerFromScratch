@@ -46,11 +46,13 @@ int main(int argc, char const *argv[])
     testRenderer.Render();
 
     // Step 7: Write the output to a file
-    // PPMWriter outputImage;
-    // outputImage.SetImage(testRenderer.GetRenderedImage());
-    // outputImage.SetImageSize(res[0], res[1]);
-    // outputImage.SetFileName("testImage.ppm");
-    // outputImage.WriteImage();
+    PPMWriter outputImage;
+    std::array<unsigned int, 2> res;
+    testRenderer.GetImageResolution(res);
+    outputImage.SetImage(testRenderer.GetRenderedImage());
+    outputImage.SetImageSize(res[0], res[1]);
+    outputImage.SetFileName("testImage.ppm");
+    outputImage.WriteImage();
 
     delete testObject;
     delete testLight;
