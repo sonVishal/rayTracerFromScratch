@@ -10,8 +10,9 @@ private:
     Scene m_sceneToRender;
     RGBImage m_renderedScene;
     Camera m_camera;
-    double m_focalLength{0.005};
     std::vector<double> m_distanceBuffer;
+    double m_aspectRatio{0.75};
+    double m_maxRes{100};
 
 public:
     Renderer() = default;
@@ -20,6 +21,14 @@ public:
     void SetCamera(const Camera &t_camera);
     const RGBImage &GetRenderedImage() const;
     void Render();
+
+    void SetAspectRatio(double t_aspectRatio);
+    void SetResolution(double t_res);
+
+    double GetAspectRatio() const;
+    double GetResolution() const;
+
+    void GetImageResolution(std::array<unsigned int, 2> &t_imageRes);
 };
 
 #endif //_RENDERER_HPP_

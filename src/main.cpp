@@ -9,7 +9,8 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 
-// TODO: Define units!!!
+// Everything is in meters!!!
+// Only support rectilinear lenses!!!
 
 int main(int argc, char const *argv[])
 {
@@ -17,25 +18,14 @@ int main(int argc, char const *argv[])
     Scene testScene;
 
     // Step 2: Add objects to the scene
-    int nObjs = 1;
-    Object **testObjs = new Object*[nObjs];
-    double radius = 4.0;
-    for (int i = 0; i < nObjs; i++)
-    {
-        testObjs[i] = new Sphere;
-        std::array<unsigned int, 3> objColor = {0, 0, 0};
-        objColor.at(i) = 255;
-        testObjs[i]->SetColor(objColor);
-        static_cast<Sphere *>(testObjs[i])->SetRadius(radius);
-        // double angle = M_PI_2 + i * M_PI / 3;
-        testObjs[i]->SetOrigin({100.0, 0.0, 0.0});
-
-        testScene.AddObject(testObjs[i]);
-    }
-    // testScene.AddObjects(3, testObjs);
+    Object *testObject = new Sphere();
+    testObject->SetColor(RGBColor(45, 45, 45));
+    testObject->SetOrigin(Vector3(0.04, 0.0, 0.0));
+    static_cast<Sphere *>(testObject)->SetRadius(0.01);
+    testScene.AddObject(testObject);
 
     // Step 3: Add lights to the scene
-    Light *testLight = new Light(Vector3{0.0, 0.0, 10.0});
+    Light *testLight = new Light(Vector3{0.0, 0.0, 0.01});
     testScene.AddLight(testLight);
 
     // Step 4: Define what to render
@@ -44,29 +34,25 @@ int main(int argc, char const *argv[])
 
     // Step 5: Setup the camera
     Vector3 cameraUp, cameraOrigin,
-        cameraView{100.0, 0.0, 0.0};
+        cameraView{0.04, 0.0, 0.0};
     cameraUp.SetCoordAt(2, 1.0);
     Camera testCamera(cameraOrigin, cameraUp, cameraView);
-    testCamera.SetResolution(100, 100);
     testRenderer.SetCamera(testCamera);
 
-    // Step 6: Render!
+    // Setp 6: Setup the resolution
+    testRenderer.SetResolution(100); // N pixels in the longest dir
+
+    // Step 7: Render!
     testRenderer.Render();
 
     // Step 7: Write the output to a file
-    PPMWriter outputImage;
-    outputImage.SetImage(testRenderer.GetRenderedImage());
-    unsigned int res[2];
-    testCamera.GetResolution(res[0], res[1]);
-    outputImage.SetImageSize(res[0], res[1]);
-    outputImage.SetFileName("testImage.ppm");
-    outputImage.WriteImage();
+    // PPMWriter outputImage;
+    // outputImage.SetImage(testRenderer.GetRenderedImage());
+    // outputImage.SetImageSize(res[0], res[1]);
+    // outputImage.SetFileName("testImage.ppm");
+    // outputImage.WriteImage();
 
-    for (int i = 0; i < nObjs; i++)
-    {
-        delete testObjs[i];
-    }
-    delete[] testObjs;
+    delete testObject;
     delete testLight;
     return 0;
 }

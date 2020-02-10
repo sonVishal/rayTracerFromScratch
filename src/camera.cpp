@@ -1,4 +1,5 @@
 #include "camera.hpp"
+#include <cmath>
 
 Camera::Camera(const Vector3 &t_origin, const Vector3 &t_upDirection,
                const Vector3 &t_viewDirection)
@@ -12,22 +13,24 @@ Camera::Camera(const Vector3 &t_origin, const Vector3 &t_upDirection,
     m_left.Normalize();
 }
 
-void Camera::GetResolution(unsigned int &t_xPixels, unsigned int &t_yPixels) const
+void Camera::SetOrigin(Vector3 t_origin)
 {
-    t_xPixels = m_resolution[0];
-    t_yPixels = m_resolution[1];
+    m_origin = t_origin;
 }
-
-void Camera::GetResolution(double &t_xPixels, double &t_yPixels) const
+void Camera::SetUpDirection(Vector3 t_upDir)
 {
-    t_xPixels = static_cast<double>(m_resolution[0]);
-    t_yPixels = static_cast<double>(m_resolution[1]);
+    m_up = t_upDir;
+    m_up.Normalize();
 }
-
-void Camera::SetResolution(unsigned int t_xPixels, unsigned int t_yPixels)
+void Camera::SetLeftDirection(Vector3 t_leftDir)
 {
-    m_resolution[0] = t_xPixels;
-    m_resolution[1] = t_yPixels;
+    m_left = t_leftDir;
+    m_left.Normalize();
+}
+void Camera::SetViewDirection(Vector3 t_viewDir)
+{
+    m_view = t_viewDir;
+    m_view.Normalize();
 }
 
 const Vector3 Camera::GetOrigin() const
@@ -48,4 +51,39 @@ const Vector3 Camera::GetLeftDirection() const
 const Vector3 Camera::GetViewDirection() const
 {
     return m_view;
+}
+
+void Camera::SetFocalLength(double t_focalLength)
+{
+    m_focalLength = t_focalLength;
+}
+
+void Camera::SetFrameSize(double t_frameSize)
+{
+    m_frameSize = t_frameSize;
+}
+
+double Camera::GetFocalLength() const
+{
+    return m_focalLength;
+}
+
+double Camera::GetFrameSize() const
+{
+    return m_frameSize;
+}
+
+double Camera::GetFieldOfView() const
+{
+    return (2.0 * atan(m_frameSize * 0.5 / m_focalLength));
+}
+
+double Camera::GetImageWidth() const
+{
+    return (m_distToPlane * (m_frameSize * 0.5 / m_focalLength));
+}
+
+Vector3 Camera::GetImagePlaneCenter() const
+{
+    return (m_origin + (m_view * m_distToPlane));
 }
