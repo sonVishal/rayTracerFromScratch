@@ -85,7 +85,6 @@ void Renderer::Render()
                 }
                 m_renderedScene.emplace_back(pixelColor);
             }
-            std::cout << rayOrigin << std::endl;
         }
     }
 }

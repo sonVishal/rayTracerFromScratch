@@ -19,7 +19,7 @@ int main(int argc, char const *argv[])
 
     // Step 2: Add objects to the scene
     Object *testObject = new Sphere();
-    testObject->SetColor(RGBColor(45, 45, 45));
+    testObject->SetColor(RGBColor(45, 90, 180));
     testObject->SetOrigin(Vector3(0.04, 0.0, 0.0));
     static_cast<Sphere *>(testObject)->SetRadius(0.01);
     testScene.AddObject(testObject);
@@ -40,7 +40,7 @@ int main(int argc, char const *argv[])
     testRenderer.SetCamera(testCamera);
 
     // Setp 6: Setup the resolution
-    testRenderer.SetResolution(100); // N pixels in the longest dir
+    testRenderer.SetResolution(20); // N pixels in the longest dir
 
     // Step 7: Render!
     testRenderer.Render();
