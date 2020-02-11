@@ -3,7 +3,7 @@
 #include <fstream>
 #include <iostream>
 
-const std::string PPMWriter::m_fileType = "P3\n";
+const std::string PPMWriter::m_fileType = "P6";
 
 PPMWriter::PPMWriter(const char *t_fileName) : m_fileName(t_fileName)
 {
@@ -17,8 +17,8 @@ void PPMWriter::SetFileName(const char *t_fileName)
 
 void PPMWriter::SetImageSize(unsigned int t_rows, unsigned int t_columns)
 {
-    m_numRows = t_rows;
-    m_numColumns = t_columns;
+    m_height = t_rows;
+    m_width = t_columns;
 }
 
 void PPMWriter::SetImage(const RGBImage &t_image)
@@ -28,7 +28,22 @@ void PPMWriter::SetImage(const RGBImage &t_image)
 
 void PPMWriter::WritePixel(std::ofstream &t_fileStream, const RGBColor &t_pixelValue)
 {
-    t_fileStream << t_pixelValue.GetRed() << ' ' << t_pixelValue.GetGreen() << ' ' << t_pixelValue.GetBlue();
+    uint8_t colorAsBytes[3] = {0, 0, 0};
+    unsigned int colorRGB[3] = {t_pixelValue.GetRed(), t_pixelValue.GetGreen(), t_pixelValue.GetBlue()};
+
+    for (size_t i = 0; i < 3; i++)
+    {
+        for (size_t j = 0; j < 8; j++)
+        {
+            uint8_t bitMask = (1 << j);
+            if (colorRGB[i] & bitMask)
+            {
+                colorAsBytes[i] |= bitMask;
+            }
+        }
+    }
+
+    t_fileStream << colorAsBytes[0] << colorAsBytes[1] << colorAsBytes[2];
 }
 
 void PPMWriter::SetFileComment(const char *t_fileComment)
@@ -39,32 +54,31 @@ void PPMWriter::SetFileComment(const char *t_fileComment)
 
 void PPMWriter::WriteImage()
 {
-    if (m_numColumns * m_numRows != m_pixelMatrix.size())
+    if (m_width * m_height != m_pixelMatrix.size())
     {
         std::cerr << "Matrix does not contain enough elements\n";
         return;
     }
 
-    std::ofstream imageFile;
-    imageFile.open(m_fileName, std::ios_base::out);
+    this->m_width = this->m_height = 100;
 
-    imageFile << PPMWriter::m_fileType;
-    imageFile << this->m_fileComment;
-    imageFile << this->m_numRows << ' ' << this->m_numColumns << '\n';
-    imageFile << RGBColor::GetMaxValue() << '\n';
+    std::ofstream imageFile;
+    imageFile.open(m_fileName, std::ios_base::out | std::ios_base::binary);
+
+    imageFile << PPMWriter::m_fileType << '\n';
+    imageFile << std::to_string(this->m_width) << '\n';
+    imageFile << std::to_string(this->m_height) << '\n';
+    imageFile << std::to_string(RGBColor::GetMaxValue()) << '\n';
 
     auto currentPixel = this->m_pixelMatrix.begin();
     auto pixelEnd = this->m_pixelMatrix.end();
-    for (unsigned int i = 0; (i < this->m_numRows) && (currentPixel != pixelEnd); i++)
+    for (unsigned int i = 0; (i < this->m_height) && (currentPixel != pixelEnd); i++)
     {
-        for (unsigned int j = 0; j < (this->m_numColumns) && (currentPixel != pixelEnd); j++)
+        for (unsigned int j = 0; j < (this->m_width) && (currentPixel != pixelEnd); j++)
         {
             PPMWriter::WritePixel(imageFile, *currentPixel);
-            // After each pixel put two spaces for readability
-            imageFile << "  ";
             std::advance(currentPixel, 1);
         }
-        imageFile << '\n';
     }
 
     imageFile.close();

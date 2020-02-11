@@ -39,8 +39,9 @@ int main(int argc, char const *argv[])
     Camera testCamera(cameraOrigin, cameraUp, cameraView);
     testRenderer.SetCamera(testCamera);
 
-    // Setp 6: Setup the resolution
-    testRenderer.SetResolution(20); // N pixels in the longest dir
+    // Setp 6: Setup the resolution and aspect ratio
+    testRenderer.SetResolution(100); // N pixels in the longest dir
+    testRenderer.SetAspectRatio(4.0/3.0); // 3:4
 
     // Step 7: Render!
     testRenderer.Render();

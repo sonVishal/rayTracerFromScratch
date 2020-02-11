@@ -20,8 +20,8 @@ public:
     void SetImage(const RGBImage &t_image);
 
 private:
-    unsigned int m_numRows{1};
-    unsigned int m_numColumns{1};
+    unsigned int m_height{1};
+    unsigned int m_width{1};
     RGBImage m_pixelMatrix;
     static const std::string m_fileType;
     std::string m_fileComment{"# This file has been written by PPMWriter v0.0.1\n"};

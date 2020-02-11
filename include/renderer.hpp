@@ -11,7 +11,7 @@ private:
     RGBImage m_renderedScene;
     Camera m_camera;
     std::vector<double> m_distanceBuffer;
-    double m_aspectRatio{0.75};
+    double m_aspectRatio;
     double m_maxRes{100};
 
 public:
