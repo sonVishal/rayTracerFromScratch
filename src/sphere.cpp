@@ -35,7 +35,7 @@ int Sphere::GetIntersectionWithRay(const Vector3 &rayDirection,
 
     a = rayDirection.GetMagnitudeSq();
     b = (rayDirection * 2.0) % (rayOrigin - m_origin);
-    c = m_origin.GetMagnitudeSq() - m_radius * m_radius;
+    c = rayOrigin.GetMagnitudeSq() + m_origin.GetMagnitudeSq() - 2.0 * (rayOrigin % m_origin) - m_radius * m_radius;
 
     intersectionEq.SetEquation(a, b, c);
     nIntersectionPts = intersectionEq.CalculateRoots();

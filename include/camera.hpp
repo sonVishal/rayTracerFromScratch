@@ -10,9 +10,9 @@ private:
         m_left{0.0},             // X, or Left when we look down the view direction
         m_up{0.0},               // Y
         m_view{0.0};             // View direction is negative Z
-    double m_focalLength{0.05};  // Default to 50mm lens
-    double m_frameSize{0.035};   // Default to 35mm film format
-    double m_distToPlane{0.001}; // No need to give this out to user as of now
+    double m_focalLength{50};  // Default to 50mm lens
+    double m_frameSize{35};   // Default to 35mm film format
+    double m_distToPlane{1}; // No need to give this out to user as of now
 
 public:
     Camera() = default;

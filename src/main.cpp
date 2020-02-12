@@ -8,7 +8,6 @@
 #include <cmath>
 #include <png++/png.hpp>
 
-// Everything is in meters!!!
 // Only support rectilinear lenses!!!
 
 int main(int argc, char const *argv[])
@@ -18,24 +17,26 @@ int main(int argc, char const *argv[])
 
     // Step 2: Add objects to the scene
     Object *testObject = new Sphere();
+    Vector3 objOrigin{10.0, 0.0, 0.0};
     testObject->SetColor(png::rgba_pixel(255, 0, 0));
-    testObject->SetOrigin(Vector3(0.04, 0.0, 0.0));
-    static_cast<Sphere *>(testObject)->SetRadius(0.01);
+    testObject->SetOrigin(objOrigin);
+    static_cast<Sphere *>(testObject)->SetRadius(1.0);
     testScene.AddObject(testObject);
     testScene.SetAmbientColor(png::rgba_pixel(100, 100, 100));
 
     // Step 3: Add lights to the scene
-    Light *testLight = new Light(Vector3{0.0, 0.0, 0.01});
-    testScene.AddLight(testLight);
+    // Light *testLight = new Light(Vector3{0.0, 0.0, 0.01});
+    // testScene.AddLight(testLight);
 
     // Step 4: Define what to render
     Renderer testRenderer;
     testRenderer.SetScene(testScene);
 
     // Step 5: Setup the camera
-    Vector3 cameraUp, cameraOrigin,
-        cameraView{0.04, 0.0, 0.0};
-    cameraUp.SetCoordAt(2, 1.0);
+    Vector3 cameraUp, cameraOrigin{0.0, 0.0, 0.0},
+        cameraView;
+    cameraView = objOrigin - cameraOrigin;
+    cameraUp = {0.0, 0.0, 1.0};
     Camera testCamera(cameraOrigin, cameraUp, cameraView);
     testRenderer.SetCamera(testCamera);
 
@@ -50,6 +51,6 @@ int main(int argc, char const *argv[])
     testRenderer.WriteRenderedImage("test_image.png");
 
     delete testObject;
-    delete testLight;
+    // delete testLight;
     return 0;
 }

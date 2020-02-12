@@ -21,7 +21,7 @@ public:
     const png::rgba_pixel GetColor() const;
     virtual int GetIntersectionWithRay(const Vector3 &ray,
                                        const Vector3 &rayOrigin,
-                                       std::array<Vector3, 2> &intersectionPoints) const;
+                                       std::array<Vector3, 2> &intersectionPoints) const = 0;
     virtual ~Object();
 };
 
