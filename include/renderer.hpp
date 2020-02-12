@@ -2,13 +2,13 @@
 #define _RENDERER_HPP_
 #include "scene.hpp"
 #include "camera.hpp"
-#include "rgbcolor.hpp"
+#include <png++/png.hpp>
 
 class Renderer
 {
 private:
     Scene m_sceneToRender;
-    RGBImage m_renderedScene;
+    png::image<png::rgba_pixel> m_renderedScene;
     Camera m_camera;
     std::vector<double> m_distanceBuffer;
     double m_aspectRatio;
@@ -19,7 +19,7 @@ public:
     ~Renderer() = default;
     void SetScene(const Scene &t_scene);
     void SetCamera(const Camera &t_camera);
-    const RGBImage &GetRenderedImage() const;
+    void WriteRenderedImage(const char* t_fileName);
     void Render();
 
     void SetAspectRatio(double t_aspectRatio);

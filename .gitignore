@@ -9,4 +9,4 @@ bin/*
 .vscode
 
 # Ignore image files
-*.ppm
+*.png

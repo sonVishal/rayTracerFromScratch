@@ -10,7 +10,7 @@ Sphere::~Sphere()
 {
 }
 
-Sphere::Sphere(const RGBColor &t_color) : Object{t_color}
+Sphere::Sphere(const png::rgba_pixel &t_color) : Object{t_color}
 {
 }
 

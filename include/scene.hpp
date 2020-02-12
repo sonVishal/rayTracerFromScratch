@@ -3,15 +3,15 @@
 #include <vector>
 #include "sphere.hpp"
 #include "light.hpp"
-#include "rgbcolor.hpp"
 #include "camera.hpp"
+#include <png++/rgba_pixel.hpp>
 
 class Scene
 {
 private:
     std::vector<Object *> m_objects;
     std::vector<Light *> m_lights;
-    RGBColor m_ambientColor{0};
+    png::rgba_pixel m_ambientColor;
     Camera m_camera;
 
 public:
@@ -19,7 +19,8 @@ public:
     void AddLight(Light *t_light);
     void AddObject(Object *t_object);
     void AddObjects(int t_nObjects, Object *t_objects);
-    void SetAmbientColor(const RGBColor &t_color);
+    void SetAmbientColor(const png::rgba_pixel &t_color);
+    const png::rgba_pixel GetAmbientColor() const;
     void SetCamera(const Camera &t_camera);
     unsigned int GetNumberOfObjects() const;
     const Object &GetObjectAt(unsigned int) const;

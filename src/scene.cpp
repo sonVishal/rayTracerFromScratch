@@ -26,9 +26,14 @@ void Scene::AddObjects(int t_nObjects, Object* t_objects)
     }
 }
 
-void Scene::SetAmbientColor(const RGBColor &t_color)
+void Scene::SetAmbientColor(const png::rgba_pixel &t_color)
 {
     m_ambientColor = t_color;
+}
+
+const png::rgba_pixel Scene::GetAmbientColor() const
+{
+    return m_ambientColor;
 }
 
 void Scene::SetCamera(const Camera &t_camera)

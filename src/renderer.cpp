@@ -58,38 +58,40 @@ void Renderer::Render()
 
     double pixelXoffset = 0.5, pixelYoffset = 0.5;
 
-    for (unsigned int i = 0; i < resolution.at(0); i++)
+    m_renderedScene.resize(resolution.at(0), resolution.at(1));
+
+    for (unsigned int y = 0; y < resolution.at(1); y++)
     {
-        for (unsigned int j = 0; j < resolution.at(1); j++)
+        for (unsigned int x = 0; x < resolution.at(0); x++)
         {
             Vector3 rayOrigin, rayDirection;
             Vector3 rightOffset = imagePlaneRightDir * pixelWidth;
             Vector3 downOffset = imagePlaneDownDir * pixelHeight;
 
-            Vector3 pixelTopLeft = imagePlaneTopLeft + rightOffset * i + downOffset * j;
+            Vector3 pixelTopLeft = imagePlaneTopLeft + rightOffset * y + downOffset * x;
             rayOrigin = pixelTopLeft + rightOffset * pixelXoffset +
                         downOffset * pixelYoffset;
             rayDirection = rayOrigin - m_camera.GetOrigin();
             rayDirection.Normalize();
 
             int nIntPts = 0;
-            std::array<Vector3, 2> intersectionPts;
+            png::rgba_pixel pixelColor(m_sceneToRender.GetAmbientColor());
             for (auto obj : m_sceneToRender.GetObjectList())
             {
+                std::array<Vector3, 2> intersectionPts;
                 nIntPts = obj->GetIntersectionWithRay(rayDirection, rayOrigin, intersectionPts);
 
-                RGBColor pixelColor(0, 0, 0);
                 if (nIntPts > 0)
                 {
                     pixelColor = obj->GetColor();
                 }
-                m_renderedScene.emplace_back(pixelColor);
             }
+            m_renderedScene[y][x] = pixelColor;
         }
     }
 }
 
-const RGBImage &Renderer::GetRenderedImage() const
+void Renderer::WriteRenderedImage(const char* t_fileName)
 {
-    return m_renderedScene;
+    m_renderedScene.write(t_fileName);
 }

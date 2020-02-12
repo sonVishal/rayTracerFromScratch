@@ -1,13 +1,12 @@
 #include <iostream>
 #include "sphere.hpp"
-#include "rgbcolor.hpp"
-#include "ppmwriter.hpp"
 #include "scene.hpp"
 #include "light.hpp"
 #include "renderer.hpp"
 #include "camera.hpp"
 #define _USE_MATH_DEFINES
 #include <cmath>
+#include <png++/png.hpp>
 
 // Everything is in meters!!!
 // Only support rectilinear lenses!!!
@@ -19,10 +18,11 @@ int main(int argc, char const *argv[])
 
     // Step 2: Add objects to the scene
     Object *testObject = new Sphere();
-    testObject->SetColor(RGBColor(45, 90, 180));
+    testObject->SetColor(png::rgba_pixel(255, 0, 0));
     testObject->SetOrigin(Vector3(0.04, 0.0, 0.0));
     static_cast<Sphere *>(testObject)->SetRadius(0.01);
     testScene.AddObject(testObject);
+    testScene.SetAmbientColor(png::rgba_pixel(100, 100, 100));
 
     // Step 3: Add lights to the scene
     Light *testLight = new Light(Vector3{0.0, 0.0, 0.01});
@@ -41,19 +41,13 @@ int main(int argc, char const *argv[])
 
     // Setp 6: Setup the resolution and aspect ratio
     testRenderer.SetResolution(100); // N pixels in the longest dir
-    testRenderer.SetAspectRatio(4.0/3.0); // 3:4
+    testRenderer.SetAspectRatio(9.0/16.0); // 16:9
 
     // Step 7: Render!
     testRenderer.Render();
 
     // Step 7: Write the output to a file
-    PPMWriter outputImage;
-    std::array<unsigned int, 2> res;
-    testRenderer.GetImageResolution(res);
-    outputImage.SetImage(testRenderer.GetRenderedImage());
-    outputImage.SetImageSize(res[0], res[1]);
-    outputImage.SetFileName("testImage.ppm");
-    outputImage.WriteImage();
+    testRenderer.WriteRenderedImage("test_image.png");
 
     delete testObject;
     delete testLight;
