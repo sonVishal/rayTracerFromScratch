@@ -70,7 +70,7 @@ void Renderer::Render()
             Vector3 rightOffset = imagePlaneRightDir * pixelWidth;
             Vector3 downOffset = imagePlaneDownDir * pixelHeight;
 
-            Vector3 pixelTopLeft = imagePlaneTopLeft + rightOffset * y + downOffset * x;
+            Vector3 pixelTopLeft = imagePlaneTopLeft + rightOffset * x + downOffset * y;
             rayOrigin = pixelTopLeft + rightOffset * pixelXoffset +
                         downOffset * pixelYoffset;
             rayDirection = rayOrigin - m_camera.GetOrigin();

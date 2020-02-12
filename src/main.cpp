@@ -42,8 +42,8 @@ int main(int argc, char const *argv[])
     testRenderer.SetCamera(testCamera);
 
     // Setp 6: Setup the resolution and aspect ratio
-    testRenderer.SetResolution(100); // N pixels in the longest dir
-    testRenderer.SetAspectRatio(1.0); // width:height
+    testRenderer.SetResolution(11); // N pixels in the height
+    testRenderer.SetAspectRatio(17.0/11.0); // width:height
 
     // Step 7: Render!
     testRenderer.Render();
