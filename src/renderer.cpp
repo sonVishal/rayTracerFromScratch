@@ -33,14 +33,19 @@ double Renderer::GetResolution() const
 
 void Renderer::GetImageResolution(std::array<unsigned int, 2> &t_imageRes)
 {
-    t_imageRes.at(0) = m_maxRes;
-    t_imageRes.at(1) = m_aspectRatio * t_imageRes.at(0);
+    t_imageRes.at(1) = m_maxRes;
+    t_imageRes.at(0) = m_aspectRatio * t_imageRes.at(1);
 }
 
 void Renderer::Render()
 {
-    double imagePlaneWidth = m_camera.GetImageWidth();
-    double imagePlaneHeight = m_aspectRatio * imagePlaneWidth;
+    std::array<unsigned int, 2> resolution;
+    GetImageResolution(resolution);
+
+    double revisedAspectRatio = static_cast<double>(resolution.at(0)) / static_cast<double>(resolution.at(1));
+
+    double imagePlaneHeight = m_camera.GetImageHeight();
+    double imagePlaneWidth = revisedAspectRatio * imagePlaneHeight;
 
     Vector3 imagePlaneCenter = m_camera.GetImagePlaneCenter();
     Vector3 imagePlaneTopLeft = imagePlaneCenter +
@@ -49,9 +54,6 @@ void Renderer::Render()
 
     Vector3 imagePlaneRightDir = m_camera.GetLeftDirection() * -1.0;
     Vector3 imagePlaneDownDir = m_camera.GetUpDirection() * -1.0;
-
-    std::array<unsigned int, 2> resolution;
-    GetImageResolution(resolution);
 
     double pixelWidth = imagePlaneWidth / resolution.at(0);
     double pixelHeight = imagePlaneHeight / resolution.at(1);
@@ -91,7 +93,7 @@ void Renderer::Render()
     }
 }
 
-void Renderer::WriteRenderedImage(const char* t_fileName)
+void Renderer::WriteRenderedImage(const char *t_fileName)
 {
     m_renderedScene.write(t_fileName);
 }

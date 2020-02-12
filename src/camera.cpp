@@ -58,29 +58,19 @@ void Camera::SetFocalLength(double t_focalLength)
     m_focalLength = t_focalLength;
 }
 
-void Camera::SetFrameSize(double t_frameSize)
-{
-    m_frameSize = t_frameSize;
-}
-
 double Camera::GetFocalLength() const
 {
     return m_focalLength;
 }
 
-double Camera::GetFrameSize() const
-{
-    return m_frameSize;
-}
-
-double Camera::GetFieldOfView() const
-{
-    return (2.0 * atan(m_frameSize * 0.5 / m_focalLength));
-}
-
 double Camera::GetImageWidth() const
 {
-    return (m_distToPlane * (m_frameSize * 0.5 / m_focalLength));
+    return m_distToPlane * (m_frameWidth / m_focalLength);
+}
+
+double Camera::GetImageHeight() const
+{
+    return m_distToPlane * (m_frameHeight / m_focalLength);
 }
 
 Vector3 Camera::GetImagePlaneCenter() const

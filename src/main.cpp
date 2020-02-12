@@ -8,6 +8,7 @@
 #include <cmath>
 #include <png++/png.hpp>
 
+// Everything is in millimeters!!!
 // Only support rectilinear lenses!!!
 
 int main(int argc, char const *argv[])
@@ -17,10 +18,10 @@ int main(int argc, char const *argv[])
 
     // Step 2: Add objects to the scene
     Object *testObject = new Sphere();
-    Vector3 objOrigin{10.0, 0.0, 0.0};
+    Vector3 objOrigin{0.08, 0.0, 0.0};
     testObject->SetColor(png::rgba_pixel(255, 0, 0));
     testObject->SetOrigin(objOrigin);
-    static_cast<Sphere *>(testObject)->SetRadius(1.0);
+    static_cast<Sphere *>(testObject)->SetRadius(0.01);
     testScene.AddObject(testObject);
     testScene.SetAmbientColor(png::rgba_pixel(100, 100, 100));
 
@@ -42,7 +43,7 @@ int main(int argc, char const *argv[])
 
     // Setp 6: Setup the resolution and aspect ratio
     testRenderer.SetResolution(100); // N pixels in the longest dir
-    testRenderer.SetAspectRatio(9.0/16.0); // 16:9
+    testRenderer.SetAspectRatio(1.0); // width:height
 
     // Step 7: Render!
     testRenderer.Render();
