@@ -1,7 +1,7 @@
 #include <iostream>
 #include "sphere.hpp"
 #include "scene.hpp"
-#include "light.hpp"
+#include "area_light.hpp"
 #include "renderer.hpp"
 #include "camera.hpp"
 #define _USE_MATH_DEFINES
@@ -42,8 +42,8 @@ int main(int argc, char const *argv[])
 
     // Step 3: Set ambient color and add lights to the scene
     testScene.SetAmbientColor({100, 100, 100, 255});
-    // Light *testLight = new Light(Vector3{0.0, 0.0, 0.01});
-    // testScene.AddLight(testLight);
+    AreaLight testLight({0.08, 0.0, 0.04}, {0.0, 0.0, -1.0}, 100);
+    testScene.AddLight(&testLight);
 
     // Step 4: Define what to render
     Renderer testRenderer;
@@ -67,6 +67,5 @@ int main(int argc, char const *argv[])
     // Step 7: Write the output to a file
     testRenderer.WriteRenderedImage("test_image.png");
 
-    // delete testLight;
     return 0;
 }
