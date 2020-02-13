@@ -17,7 +17,7 @@ int main(int argc, char const *argv[])
     Scene testScene;
 
     // Step 2: Add objects to the scene
-    Sphere *testObjects = new Sphere[3];
+    Sphere testObjects[3] = {};
     double origin = -0.02;
     for (size_t i = 0; i < 3; i++)
     {
@@ -67,7 +67,6 @@ int main(int argc, char const *argv[])
     // Step 7: Write the output to a file
     testRenderer.WriteRenderedImage("test_image.png");
 
-    delete[] testObjects;
     // delete testLight;
     return 0;
 }
