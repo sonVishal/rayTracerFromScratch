@@ -78,7 +78,9 @@ void Renderer::Render()
 
             int nIntPts = 0;
             png::rgba_pixel pixelColor(m_sceneToRender.GetAmbientColor());
-            for (auto obj : m_sceneToRender.GetObjectList())
+
+            auto objList = m_sceneToRender.GetObjectList();
+            for (auto obj : objList)
             {
                 std::array<Vector3, 2> intersectionPts;
                 nIntPts = obj->GetIntersectionWithRay(rayDirection, rayOrigin, intersectionPts);

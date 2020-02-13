@@ -2,7 +2,7 @@
 #include "quadratic.hpp"
 #include "object.hpp"
 
-Sphere::Sphere()
+Sphere::Sphere() : Object()
 {
 }
 
