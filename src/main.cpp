@@ -17,24 +17,31 @@ int main(int argc, char const *argv[])
     Scene testScene;
 
     // Step 2: Add objects to the scene
-    Sphere *testObjects = new Sphere[2];
-
-    testObjects[0].SetColor(png::rgba_pixel(255, 0, 0));
-    testObjects[0].SetOrigin({0.08, 0.0, 0.0});
-    testObjects[0].SetRadius(0.01);
-
-    testObjects[1].SetColor(png::rgba_pixel(0, 255, 0));
-    testObjects[1].SetOrigin({0.08, 0.01, 0.0});
-    testObjects[1].SetRadius(0.01);
-
-    for (size_t i = 0; i < 2; i++)
+    Sphere *testObjects = new Sphere[3];
+    double origin = -0.02;
+    for (size_t i = 0; i < 3; i++)
     {
+        switch (i)
+        {
+        case 0:
+            testObjects[i].SetColor(png::rgba_pixel(0, 0, 255));
+            break;
+        case 1:
+            testObjects[i].SetColor(png::rgba_pixel(0, 255, 0));
+            break;
+        case 2:
+            testObjects[i].SetColor(png::rgba_pixel(255, 0, 0));
+            break;
+        default:
+            break;
+        }
+        testObjects[i].SetOrigin({0.08, origin + i * std::abs(origin) , 0.0});
+        testObjects[i].SetRadius(0.005);
         testScene.AddObject(&testObjects[i]);
     }
 
+    // Step 3: Set ambient color and add lights to the scene
     testScene.SetAmbientColor({100, 100, 100, 255});
-
-    // Step 3: Add lights to the scene
     // Light *testLight = new Light(Vector3{0.0, 0.0, 0.01});
     // testScene.AddLight(testLight);
 
