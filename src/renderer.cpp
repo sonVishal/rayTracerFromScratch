@@ -76,16 +76,15 @@ void Renderer::Render()
             rayDirection = rayOrigin - m_camera.GetOrigin();
             rayDirection.Normalize();
 
-            int nIntPts = 0;
             png::rgba_pixel pixelColor(m_sceneToRender.GetAmbientColor());
 
             auto objList = m_sceneToRender.GetObjectList();
             for (auto obj : objList)
             {
-                std::array<Vector3, 2> intersectionPts;
-                nIntPts = obj->GetIntersectionWithRay(rayDirection, rayOrigin, intersectionPts);
+                std::vector<Vector3> intersectionPts;
+                obj->GetIntersectionWithRay(rayDirection, rayOrigin, intersectionPts);
 
-                if (nIntPts > 0)
+                if (!intersectionPts.empty())
                 {
                     pixelColor = obj->GetColor();
                 }

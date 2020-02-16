@@ -8,7 +8,7 @@ TARGET := $(BINDIR)/traceIt
 SRCEXT := cpp
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
-DEBUG_FLAGS := -DDEBUG_RAY -DDEBUG_INTERSECTION
+DEBUG_FLAGS :=
 CFLAGS := -g -O0 -Wall $(DEBUG_FLAGS) `libpng-config --cflags`
 LIB := `libpng-config --ldflags` #in case of third party libs
 INC := -I include

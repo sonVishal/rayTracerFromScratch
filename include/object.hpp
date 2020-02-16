@@ -2,6 +2,7 @@
 #define _OBJECT_HPP_
 #include "vector3.hpp"
 #include <png++/rgba_pixel.hpp>
+#include <vector>
 
 class Object
 {
@@ -19,9 +20,9 @@ public:
     void SetOrigin(const Vector3& t_origin);
     void SetColor(const png::rgba_pixel &t_color);
     const png::rgba_pixel GetColor() const;
-    virtual int GetIntersectionWithRay(const Vector3 &ray,
+    virtual void GetIntersectionWithRay(const Vector3 &ray,
                                        const Vector3 &rayOrigin,
-                                       std::array<Vector3, 2> &intersectionPoints) const = 0;
+                                       std::vector<Vector3> &intersectionPoints) const = 0;
     virtual ~Object();
 };
 

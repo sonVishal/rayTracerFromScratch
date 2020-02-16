@@ -24,9 +24,9 @@ void Sphere::SetRadius(double t_radius)
     m_radius = t_radius;
 }
 
-int Sphere::GetIntersectionWithRay(const Vector3 &rayDirection,
+void Sphere::GetIntersectionWithRay(const Vector3 &rayDirection,
                                    const Vector3 &rayOrigin,
-                                   std::array<Vector3, 2> &intersectionPoints) const
+                                   std::vector<Vector3> &intersectionPoints) const
 {
     int nIntersectionPts = 0;
 
@@ -40,22 +40,18 @@ int Sphere::GetIntersectionWithRay(const Vector3 &rayDirection,
     intersectionEq.SetEquation(a, b, c);
     nIntersectionPts = intersectionEq.CalculateRoots();
     auto roots = intersectionEq.GetRoots();
+
+    intersectionPoints.clear();
     switch (nIntersectionPts)
     {
-    case 0:
-        intersectionPoints.at(0) = intersectionPoints.at(1) = Vector3(0.0);
-        break;
     case 1:
-        intersectionPoints.at(0) = rayOrigin + rayDirection * roots.at(0);
-        intersectionPoints.at(1) = Vector3(0.0);
+        intersectionPoints.emplace_back(rayOrigin + rayDirection * roots.at(0));
         break;
     case 2:
-        intersectionPoints.at(0) = rayOrigin + rayDirection * roots.at(0);
-        intersectionPoints.at(1) = rayOrigin + rayDirection * roots.at(1);
+        intersectionPoints.emplace_back(rayOrigin + rayDirection * roots.at(0));
+        intersectionPoints.emplace_back(rayOrigin + rayDirection * roots.at(1));
         break;
     default:
         break;
     }
-
-    return nIntersectionPts;
 }

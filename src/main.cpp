@@ -7,6 +7,7 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 #include <png++/png.hpp>
+#include "plane.hpp"
 
 // Everything is in millimeters!!!
 // Only support rectilinear lenses!!!
@@ -40,8 +41,13 @@ int main(int argc, char const *argv[])
         testScene.AddObject(&testObjects[i]);
     }
 
+    Plane testPlane{Vector3(0.08, 0.0, -0.04), png::rgba_pixel(100, 0, 100, 255)};
+    testPlane.SetLength(0.01);
+    testPlane.SetBreadth(0.01);
+    testScene.AddObject(&testPlane);
+
     // Step 3: Set ambient color and add lights to the scene
-    testScene.SetAmbientColor({100, 100, 100, 255});
+    testScene.SetAmbientColor({0, 0, 0, 0});
     AreaLight testLight({0.08, 0.0, 0.04}, {0.0, 0.0, -1.0}, 100);
     testScene.AddLight(&testLight);
 
