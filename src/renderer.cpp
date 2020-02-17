@@ -37,26 +37,6 @@ void Renderer::GetImageResolution(std::array<unsigned int, 2> &t_imageRes) const
     t_imageRes.at(0) = m_aspectRatio * t_imageRes.at(1);
 }
 
-void Renderer::TraceRay(const Vector3 &t_rayDir, const Vector3 &t_rayOrigin,
-                        const std::vector<Object *> t_objList,
-                        png::rgba_pixel &t_pixelColor) const
-{
-    t_pixelColor = m_sceneToRender.GetAmbientColor();
-    for (size_t i = 0; i < m_maxBounces; i++)
-    {
-        for (auto obj : t_objList)
-        {
-            std::vector<Vector3> intersectionPts;
-            obj->GetIntersectionWithRay(t_rayDir, t_rayOrigin, intersectionPts);
-
-            if (!intersectionPts.empty())
-            {
-                t_pixelColor = obj->GetColor();
-            }
-        }
-    }
-}
-
 unsigned int Renderer::GetSamplesPerPixel() const
 {
     return m_raysPerPixel;
@@ -114,6 +94,26 @@ void Renderer::GetRayInfo(Vector3 &t_rayOrigin, Vector3 &t_rayDirection,
                   downOffsetDir * t_downOffset;
     t_rayDirection = t_rayOrigin - m_camera.GetOrigin();
     t_rayDirection.Normalize();
+}
+
+void Renderer::TraceRay(const Vector3 &t_rayDir, const Vector3 &t_rayOrigin,
+                        const std::vector<Object *> t_objList,
+                        png::rgba_pixel &t_pixelColor) const
+{
+    t_pixelColor = m_sceneToRender.GetAmbientColor();
+    for (size_t i = 0; i < m_maxBounces; i++)
+    {
+        for (auto obj : t_objList)
+        {
+            std::vector<Vector3> intersectionPts;
+            obj->GetIntersectionWithRay(t_rayDir, t_rayOrigin, intersectionPts);
+
+            if (!intersectionPts.empty())
+            {
+                t_pixelColor = obj->GetColor();
+            }
+        }
+    }
 }
 
 void Renderer::Render()

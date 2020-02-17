@@ -1,7 +1,7 @@
 #include <iostream>
 #include "sphere.hpp"
 #include "scene.hpp"
-#include "area_light.hpp"
+#include "point_light.hpp"
 #include "renderer.hpp"
 #include "camera.hpp"
 #define _USE_MATH_DEFINES
@@ -48,7 +48,7 @@ int main(int argc, char const *argv[])
 
     // Step 3: Set ambient color and add lights to the scene
     testScene.SetAmbientColor({0, 0, 0, 0});
-    AreaLight testLight({0.08, 0.0, 0.04}, {0.0, 0.0, -1.0}, 100);
+    PointLight testLight({0.08, 0.0, 0.02}, 10.0);
     testScene.AddLight(&testLight);
 
     // Step 4: Define what to render
