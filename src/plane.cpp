@@ -42,8 +42,9 @@ void Plane::GetIntersectionWithRay(const Vector3 &ray,
     if (param > 0.0)
     {
         Vector3 intersectionPoint = rayOrigin + ray * param;
-        double planeX = std::fabs(intersectionPoint % m_xAxis);
-        double planeY = std::fabs(intersectionPoint % m_yAxis);
+        Vector3 plOriginToIntPoint = (intersectionPoint - m_origin);
+        double planeX = std::fabs(plOriginToIntPoint % m_xAxis);
+        double planeY = std::fabs(plOriginToIntPoint % m_yAxis);
         if (planeX <= m_lengthBy2 && planeY <= m_breadthBy2)
         {
             intersectionPoints.emplace_back(intersectionPoint);

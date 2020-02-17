@@ -18,6 +18,12 @@ void AreaLight::SetNormal(const Vector3 &t_normal)
     m_normal = t_normal;
 }
 
+double AreaLight::GetIntensityAt(const Vector3& t_point) const
+{
+    // TODO!!!!
+    return m_intensity;
+}
+
 AreaLight::~AreaLight()
 {
 }

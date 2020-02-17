@@ -18,6 +18,11 @@ int main(int argc, char const *argv[])
     Scene testScene;
 
     // Step 2: Add objects to the scene
+    Plane testPlane{Vector3(0.08, 0.0, -0.005), png::rgba_pixel(100, 0, 100, 255)};
+    testPlane.SetLength(0.06);
+    testPlane.SetBreadth(0.06);
+    testScene.AddObject(&testPlane);
+
     Sphere testObjects[3] = {};
     double origin = -0.02;
     for (size_t i = 0; i < 3; i++)
@@ -41,11 +46,6 @@ int main(int argc, char const *argv[])
         testScene.AddObject(&testObjects[i]);
     }
 
-    Plane testPlane{Vector3(0.08, 0.0, -0.04), png::rgba_pixel(100, 0, 100, 255)};
-    testPlane.SetLength(0.01);
-    testPlane.SetBreadth(0.01);
-    testScene.AddObject(&testPlane);
-
     // Step 3: Set ambient color and add lights to the scene
     testScene.SetAmbientColor({0, 0, 0, 0});
     AreaLight testLight({0.08, 0.0, 0.04}, {0.0, 0.0, -1.0}, 100);
@@ -61,11 +61,12 @@ int main(int argc, char const *argv[])
     cameraView = {1.0, 0.0, 0.0};
     cameraUp = {0.0, 0.0, 1.0};
     Camera testCamera(cameraOrigin, cameraUp, cameraView);
+    testCamera.SetFocalLength(0.035); // 35mm lens
     testRenderer.SetCamera(testCamera);
 
     // Setp 6: Setup the resolution and aspect ratio
     testRenderer.SetResolution(100);         // N pixels in the height
-    testRenderer.SetAspectRatio(16.0 / 9.0); // width:height
+    testRenderer.SetAspectRatio(4.0 / 3.0); // width:height
 
     // Step 7: Render!
     testRenderer.Render();

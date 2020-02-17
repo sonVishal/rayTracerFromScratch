@@ -13,6 +13,7 @@ private:
     std::vector<double> m_distanceBuffer;
     double m_aspectRatio;
     double m_maxRes{100};
+    unsigned int m_maxBounces{5};
 
 public:
     Renderer() = default;
@@ -24,9 +25,11 @@ public:
 
     void SetAspectRatio(double t_aspectRatio);
     void SetResolution(double t_res);
+    void SetMaxBounces(unsigned int t_maxBounces);
 
     double GetAspectRatio() const;
     double GetResolution() const;
+    unsigned int GetMaxBounces() const;
 
     void GetImageResolution(std::array<unsigned int, 2> &t_imageRes);
 };

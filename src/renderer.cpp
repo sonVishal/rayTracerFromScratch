@@ -98,3 +98,13 @@ void Renderer::WriteRenderedImage(const char *t_fileName)
 {
     m_renderedScene.write(t_fileName);
 }
+
+void Renderer::SetMaxBounces(unsigned int t_maxBounces)
+{
+    m_maxBounces = t_maxBounces;
+}
+
+unsigned int Renderer::GetMaxBounces() const
+{
+    return m_maxBounces;
+}

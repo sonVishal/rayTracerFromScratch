@@ -13,6 +13,7 @@ public:
     AreaLight(const Vector3 &t_origin, const Vector3 &t_normal, double t_intensity);
     Vector3 GetNormal() const;
     void SetNormal(const Vector3 &t_normal);
+    double GetIntensityAt(const Vector3& t_point) const;
     ~AreaLight();
 };
 
