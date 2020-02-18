@@ -1,5 +1,8 @@
 #include "renderer.hpp"
 #include "scene.hpp"
+#define _USE_MATH_DEFINES
+#include <cmath>
+#include <limits>
 
 void Renderer::SetScene(const Scene &t_scene)
 {
@@ -96,23 +99,56 @@ void Renderer::GetRayInfo(Vector3 &t_rayOrigin, Vector3 &t_rayDirection,
     t_rayDirection.Normalize();
 }
 
+static png::rgba_pixel computeLambertPixelColor(const Light &t_light, const Object &t_obj,
+                                                const Vector3 &t_intPoint,
+                                                const Vector3 &t_normal)
+{
+    Vector3 lightDir = (t_light.GetOrigin() - t_intPoint).GetNormalized();
+    double lightIntensity = (t_obj.GetAlbedo() / M_PI * t_light.GetIntensity());
+    double lambertTerm = std::max(0.0, t_normal % lightDir);
+    png::rgba_pixel outputValue(0, 0, 0, 255); // TODO: alpha!
+    outputValue.red = std::min(255, int(t_obj.GetColor().red + lightIntensity * lambertTerm * t_light.GetColor().red));
+    outputValue.green = std::min(255, int(t_obj.GetColor().green + lightIntensity * lambertTerm * t_light.GetColor().green));
+    outputValue.blue = std::min(255, int(t_obj.GetColor().blue + lightIntensity * lambertTerm * t_light.GetColor().blue));
+
+    return outputValue;
+}
+
 void Renderer::TraceRay(const Vector3 &t_rayDir, const Vector3 &t_rayOrigin,
                         const std::vector<Object *> t_objList,
                         png::rgba_pixel &t_pixelColor) const
 {
-    t_pixelColor = m_sceneToRender.GetAmbientColor();
-    for (size_t i = 0; i < m_maxBounces; i++)
+    // for (size_t i = 0; i < m_maxBounces; i++)
+    // {
+    Vector3 intPoint, surfNormal;
+    Object *intersectedObj = nullptr;
+    double minDist = std::numeric_limits<double>::max();
+    for (auto obj : t_objList)
     {
-        for (auto obj : t_objList)
+        Vector3 intersectPoint, normal;
+        double distSq = 0.0;
+        if (obj->GetClosestIntersectionWithRay(t_rayDir, t_rayOrigin, intersectPoint, normal))
         {
-            std::vector<Vector3> intersectionPts;
-            obj->GetIntersectionWithRay(t_rayDir, t_rayOrigin, intersectionPts);
-
-            if (!intersectionPts.empty())
+            distSq = (intersectPoint - obj->GetOrigin()).GetMagnitudeSq();
+            if (distSq < minDist)
             {
-                t_pixelColor = obj->GetColor();
+                intPoint = intersectPoint;
+                surfNormal = normal;
+                intersectedObj = obj;
+                minDist = distSq;
             }
         }
+    }
+
+    if (intersectedObj)
+    {
+        t_pixelColor = computeLambertPixelColor(m_sceneToRender.GetLightAt(0),
+                                                *intersectedObj, intPoint,
+                                                surfNormal);
+    }
+    else
+    {
+        t_pixelColor = m_sceneToRender.GetAmbientColor();
     }
 }
 

@@ -34,20 +34,35 @@ Plane::~Plane()
 {
 }
 
-void Plane::GetIntersectionWithRay(const Vector3 &ray,
-                                  const Vector3 &rayOrigin,
-                                  std::vector<Vector3> &intersectionPoints) const
+void Plane::GetIntersectionWithRay(const Vector3 &t_ray,
+                                   const Vector3 &t_rayOrigin,
+                                   std::vector<Vector3> &t_intersectionPoints) const
 {
-    double param = (m_normal % (m_origin - rayOrigin)) / (ray % m_normal);
+    Vector3 intPt, surfNormal;
+    if (GetClosestIntersectionWithRay(t_ray, t_rayOrigin, intPt, surfNormal))
+    {
+        t_intersectionPoints.push_back(intPt);
+    }
+}
+
+bool Plane::GetClosestIntersectionWithRay(const Vector3 &t_ray,
+                                          const Vector3 &t_rayOrigin,
+                                          Vector3 &t_intPoint,
+                                          Vector3 &t_normal) const
+{
+    bool doesIntersect = false;
+    double param = (m_normal % (m_origin - t_rayOrigin)) / (t_ray % m_normal);
     if (param > 0.0)
     {
-        Vector3 intersectionPoint = rayOrigin + ray * param;
-        Vector3 plOriginToIntPoint = (intersectionPoint - m_origin);
+        t_intPoint = t_rayOrigin + t_ray * param;
+        Vector3 plOriginToIntPoint = (t_intPoint - m_origin);
         double planeX = std::fabs(plOriginToIntPoint % m_xAxis);
         double planeY = std::fabs(plOriginToIntPoint % m_yAxis);
         if (planeX <= m_lengthBy2 && planeY <= m_breadthBy2)
         {
-            intersectionPoints.emplace_back(intersectionPoint);
+            doesIntersect = true;
+            t_normal = m_normal;
         }
     }
+    return doesIntersect;
 }

@@ -35,3 +35,8 @@ png::rgb_pixel Light::GetColor() const
 {
     return m_color;
 }
+
+const Vector3& Light::GetOrigin() const
+{
+    return m_origin;
+}

@@ -48,7 +48,7 @@ int main(int argc, char const *argv[])
 
     // Step 3: Set ambient color and add lights to the scene
     testScene.SetAmbientColor({0, 0, 0, 0});
-    PointLight testLight({0.08, 0.0, 0.02}, 10.0);
+    PointLight testLight({0.08, 0.0, 0.02}, 3.0);
     testScene.AddLight(&testLight);
 
     // Step 4: Define what to render

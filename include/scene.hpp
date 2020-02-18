@@ -23,8 +23,11 @@ public:
     const png::rgba_pixel GetAmbientColor() const;
     void SetCamera(const Camera &t_camera);
     unsigned int GetNumberOfObjects() const;
+    unsigned int GetNumberOfLights() const;
     const Object &GetObjectAt(unsigned int) const;
+    const Light &GetLightAt(unsigned int) const;
     const std::vector<Object *> &GetObjectList() const;
+    const std::vector<Light *> &GetLightList() const;
     ~Scene();
 };
 

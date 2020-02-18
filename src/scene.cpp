@@ -55,3 +55,18 @@ const std::vector<Object *> &Scene::GetObjectList() const
 {
     return m_objects;
 }
+
+unsigned int Scene::GetNumberOfLights() const
+{
+    return m_lights.size();
+}
+
+const Light &Scene::GetLightAt(unsigned int t_idx) const
+{
+    return *m_lights.at(t_idx);
+}
+
+const std::vector<Light *> &Scene::GetLightList() const
+{
+    return m_lights;
+}

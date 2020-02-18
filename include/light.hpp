@@ -19,6 +19,7 @@ public:
     virtual double GetIntensityAt(const Vector3& t_point) const = 0;
     void SetColor(const png::rgb_pixel &t_color);
     png::rgb_pixel GetColor() const;
+    const Vector3& GetOrigin() const;
     virtual ~Light();
 };
 

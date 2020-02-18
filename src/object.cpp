@@ -41,3 +41,8 @@ const png::rgba_pixel Object::GetColor() const
 {
     return m_diffuseColor;
 }
+
+double Object::GetAlbedo() const
+{
+    return m_albedo;
+}

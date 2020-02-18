@@ -21,9 +21,13 @@ public:
           const png::rgba_pixel &t_color);
     void SetLength(double t_length);
     void SetBreadth(double t_breadth);
-    void GetIntersectionWithRay(const Vector3 &ray,
-                               const Vector3 &rayOrigin,
-                               std::vector<Vector3> &intersectionPoints) const;
+    void GetIntersectionWithRay(const Vector3 &t_ray,
+                                const Vector3 &t_rayOrigin,
+                                std::vector<Vector3> &t_intersectionPoints) const;
+    bool GetClosestIntersectionWithRay(const Vector3 &t_ray,
+                                       const Vector3 &t_rayOrigin,
+                                       Vector3 &t_intPoint,
+                                       Vector3 &t_normal) const;
     ~Plane();
 };
 
