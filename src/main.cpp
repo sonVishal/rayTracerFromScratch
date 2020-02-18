@@ -18,7 +18,7 @@ int main(int argc, char const *argv[])
     Scene testScene;
 
     // Step 2: Add objects to the scene
-    Plane testPlane{Vector3(0.08, 0.0, -0.005), png::rgba_pixel(100, 0, 100, 255)};
+    Plane testPlane{Vector3(0.08, 0.0, -0.005), png::rgba_pixel(50, 0, 50, 255)};
     testPlane.SetLength(0.06);
     testPlane.SetBreadth(0.06);
     testScene.AddObject(&testPlane);
@@ -30,24 +30,24 @@ int main(int argc, char const *argv[])
         switch (i)
         {
         case 0:
-            testObjects[i].SetColor(png::rgba_pixel(0, 0, 255));
+            testObjects[i].SetColor(png::rgba_pixel(0, 0, 50));
             break;
         case 1:
-            testObjects[i].SetColor(png::rgba_pixel(0, 255, 0));
+            testObjects[i].SetColor(png::rgba_pixel(0, 50, 0));
             break;
         case 2:
-            testObjects[i].SetColor(png::rgba_pixel(255, 0, 0));
+            testObjects[i].SetColor(png::rgba_pixel(50, 0, 0));
             break;
         default:
             break;
         }
-        testObjects[i].SetOrigin({0.08, origin + i * std::abs(origin) , 0.0});
+        testObjects[i].SetOrigin({0.08, origin + i * std::abs(origin), 0.0});
         testObjects[i].SetRadius(0.005);
         testScene.AddObject(&testObjects[i]);
     }
 
     // Step 3: Set ambient color and add lights to the scene
-    testScene.SetAmbientColor({0, 0, 0, 0});
+    testScene.SetAmbientColor({100, 100, 100, 255});
     PointLight testLight({0.08, 0.0, 0.02}, 3.0);
     testScene.AddLight(&testLight);
 
@@ -65,7 +65,7 @@ int main(int argc, char const *argv[])
     testRenderer.SetCamera(testCamera);
 
     // Setp 6: Setup the resolution and aspect ratio
-    testRenderer.SetResolution(100);         // N pixels in the height
+    testRenderer.SetResolution(100);        // N pixels in the height
     testRenderer.SetAspectRatio(4.0 / 3.0); // width:height
 
     // Step 7: Render!
