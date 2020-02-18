@@ -17,7 +17,7 @@ private:
     unsigned int m_raysPerPixel{1};
 
     void TraceRay(const Vector3 &t_rayDir, const Vector3 &t_rayOrigin,
-                  const std::vector<Object *> t_objList, png::rgba_pixel &t_pixelColor) const;
+                  const std::vector<Object *>& t_objList, png::rgba_pixel &t_pixelColor) const;
 
     void GetImagePlaneInfo(Vector3 &t_imagePlaneTopLeft,
                            Vector3 &t_imagePlaneRightDir,
