@@ -3,6 +3,7 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 #include <limits>
+#include <random>
 
 void Renderer::SetScene(const Scene &t_scene)
 {
@@ -99,10 +100,13 @@ void Renderer::GetRayInfo(Vector3 &t_rayOrigin, Vector3 &t_rayDirection,
     t_rayDirection.Normalize();
 }
 
-static png::rgba_pixel computeLambertPixelColor(const Light &t_light, const Object &t_obj,
-                                                const Vector3 &t_intPoint,
-                                                const Vector3 &t_normal,
-                                                const std::vector<Object *> &t_objList)
+static void computeLambertPixelColor(const Light &t_light, const Object &t_obj,
+                                     const Vector3 &t_intPoint,
+                                     const Vector3 &t_normal,
+                                     const std::vector<Object *> &t_objList,
+                                     unsigned int &t_red,
+                                     unsigned int &t_green,
+                                     unsigned int &t_blue)
 {
     Vector3 lightDir = (t_light.GetOrigin() - t_intPoint).GetNormalized();
     Vector3 tmp1, tmp2;
@@ -119,22 +123,22 @@ static png::rgba_pixel computeLambertPixelColor(const Light &t_light, const Obje
             }
         }
     }
-    png::rgba_pixel outputValue(0, 0, 0, 255); // TODO: alpha!
+    t_red = t_green = t_blue = 0;
+    // TODO: alpha!
     if (!isShadow)
     {
         double lightIntensity = (t_obj.GetAlbedo() / M_PI * t_light.GetIntensity());
         double lambertTerm = std::max(0.0, t_normal % lightDir);
-        outputValue.red = std::min(255, int(t_obj.GetColor().red + lightIntensity * lambertTerm * t_light.GetColor().red));
-        outputValue.green = std::min(255, int(t_obj.GetColor().green + lightIntensity * lambertTerm * t_light.GetColor().green));
-        outputValue.blue = std::min(255, int(t_obj.GetColor().blue + lightIntensity * lambertTerm * t_light.GetColor().blue));
+        t_red = std::min(255, int(t_obj.GetColor().red + lightIntensity * lambertTerm * t_light.GetColor().red));
+        t_green = std::min(255, int(t_obj.GetColor().green + lightIntensity * lambertTerm * t_light.GetColor().green));
+        t_blue = std::min(255, int(t_obj.GetColor().blue + lightIntensity * lambertTerm * t_light.GetColor().blue));
     }
-
-    return outputValue;
 }
 
 void Renderer::TraceRay(const Vector3 &t_rayDir, const Vector3 &t_rayOrigin,
                         const std::vector<Object *> &t_objList,
-                        png::rgba_pixel &t_pixelColor) const
+                        unsigned int &t_red, unsigned int &t_green,
+                        unsigned int &t_blue) const
 {
     // for (size_t i = 0; i < m_maxBounces; i++)
     // {
@@ -160,13 +164,16 @@ void Renderer::TraceRay(const Vector3 &t_rayDir, const Vector3 &t_rayOrigin,
 
     if (intersectedObj)
     {
-        t_pixelColor = computeLambertPixelColor(m_sceneToRender.GetLightAt(0),
-                                                *intersectedObj, intPoint,
-                                                surfNormal, t_objList);
+        computeLambertPixelColor(m_sceneToRender.GetLightAt(0),
+                                 *intersectedObj, intPoint,
+                                 surfNormal, t_objList, t_red, t_green,
+                                 t_blue);
     }
     else
     {
-        t_pixelColor = m_sceneToRender.GetAmbientColor();
+        t_red = m_sceneToRender.GetAmbientColor().red;
+        t_green = m_sceneToRender.GetAmbientColor().green;
+        t_blue = m_sceneToRender.GetAmbientColor().blue;
     }
 }
 
@@ -181,21 +188,37 @@ void Renderer::Render()
 
     m_renderedScene.resize(xPixels, yPixels);
 
-    double pixelXoffset = 0.5, pixelYoffset = 0.5;
-
     for (unsigned int y = 0; y < yPixels; y++)
     {
         for (unsigned int x = 0; x < xPixels; x++)
         {
-            Vector3 rayOrigin, rayDirection;
+            unsigned int sumRed = 0, sumGreen = 0, sumBlue = 0;
+            for (unsigned int i = 0; i < m_raysPerPixel; i++)
+            {
+                unsigned int red = 0, green = 0, blue = 0;
+                double pixelXoffset = double(rand()) / double(RAND_MAX);
+                double pixelYoffset = double(rand()) / double(RAND_MAX);
+                Vector3 rayOrigin, rayDirection;
 
-            GetRayInfo(rayOrigin, rayDirection, imagePlaneTopLeft,
-                       imagePlaneRightDir, imagePlaneDownDir, pixelWidth,
-                       pixelXoffset, pixelYoffset, x, y);
+                GetRayInfo(rayOrigin, rayDirection, imagePlaneTopLeft,
+                           imagePlaneRightDir, imagePlaneDownDir, pixelWidth,
+                           pixelXoffset, pixelYoffset, x, y);
 
-            TraceRay(rayDirection, rayOrigin,
-                     m_sceneToRender.GetObjectList(),
-                     m_renderedScene[y][x]);
+                TraceRay(rayDirection, rayOrigin,
+                         m_sceneToRender.GetObjectList(),
+                         red, green, blue);
+                sumRed += red;
+                sumGreen += green;
+                sumBlue += blue;
+            }
+            sumRed /= m_raysPerPixel;
+            sumGreen /= m_raysPerPixel;
+            sumBlue /= m_raysPerPixel;
+
+            m_renderedScene[y][x].red = std::min(static_cast<unsigned int>(255), sumRed);
+            m_renderedScene[y][x].green = std::min(static_cast<unsigned int>(255), sumGreen);
+            m_renderedScene[y][x].blue = std::min(static_cast<unsigned int>(255), sumBlue);
+            m_renderedScene[y][x].alpha = 255;
         }
     }
 }
