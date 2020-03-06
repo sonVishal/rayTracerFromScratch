@@ -38,7 +38,7 @@ int main(int argc, char const *argv[])
         }
         testObjects[i].SetOrigin({0.08, origin + i * std::abs(origin), 0.0});
         testObjects[i].SetRadius(0.005);
-        testObjects[i].SetAlbedo(0.0 + 0.5 * i);
+        testObjects[i].SetAlbedo(0.5);
         testScene.AddObject(&testObjects[i]);
     }
 
