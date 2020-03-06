@@ -18,11 +18,6 @@ int main(int argc, char const *argv[])
     Scene testScene;
 
     // Step 2: Add objects to the scene
-    Plane testPlane{Vector3(0.08, 0.0, -0.008), png::rgba_pixel(50, 0, 50, 255)};
-    testPlane.SetLength(0.06);
-    testPlane.SetBreadth(0.06);
-    testScene.AddObject(&testPlane);
-
     Sphere testObjects[3] = {};
     double origin = -0.02;
     for (size_t i = 0; i < 3; i++)
@@ -43,8 +38,14 @@ int main(int argc, char const *argv[])
         }
         testObjects[i].SetOrigin({0.08, origin + i * std::abs(origin), 0.0});
         testObjects[i].SetRadius(0.005);
+        testObjects[i].SetAlbedo(0.0 + 0.5 * i);
         testScene.AddObject(&testObjects[i]);
     }
+
+    Plane testPlane{Vector3(0.08, 0.0, -0.008), png::rgba_pixel(50, 0, 50, 255)};
+    testPlane.SetLength(0.06);
+    testPlane.SetBreadth(0.06);
+    testScene.AddObject(&testPlane);
 
     // Step 3: Set ambient color and add lights to the scene
     testScene.SetAmbientColor({0, 0, 0, 255});

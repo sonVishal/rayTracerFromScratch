@@ -1,6 +1,7 @@
 #ifndef _CAMERA_HPP_
 #define _CAMERA_HPP_
 #include "vector3.hpp"
+#include "plane.hpp"
 #include <array>
 
 class Camera
@@ -14,6 +15,7 @@ private:
     double m_frameWidth{0.036};     // Default to 35mm film format
     double m_frameHeight{0.024};     // Default to 35mm film format
     double m_distToPlane{0.01};     // No user control required. This is fixed!
+    std::array<Plane, 2> m_clippingPlanes;
 
 public:
     Camera() = default;

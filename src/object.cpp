@@ -18,7 +18,7 @@ Object::Object(const png::rgba_pixel &t_color) : m_diffuseColor(t_color)
 
 Object::Object(const Vector3 &t_origin,
                const png::rgba_pixel &t_color) : m_origin(t_origin),
-                                          m_diffuseColor(t_color)
+                                                 m_diffuseColor(t_color)
 {
 }
 
@@ -27,7 +27,7 @@ Vector3 Object::GetOrigin() const
     return m_origin;
 }
 
-void Object::SetOrigin(const Vector3& t_origin)
+void Object::SetOrigin(const Vector3 &t_origin)
 {
     m_origin = t_origin;
 }
@@ -45,4 +45,9 @@ const png::rgba_pixel Object::GetColor() const
 double Object::GetAlbedo() const
 {
     return m_albedo;
+}
+
+void Object::SetAlbedo(double t_albedo)
+{
+    m_albedo = t_albedo;
 }

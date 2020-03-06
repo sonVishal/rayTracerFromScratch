@@ -29,6 +29,7 @@ public:
                                                Vector3 &t_intPoint,
                                                Vector3 &t_normal) const = 0;
     double GetAlbedo() const;
+    void SetAlbedo(double t_albedo); 
     virtual ~Object();
 };
 
